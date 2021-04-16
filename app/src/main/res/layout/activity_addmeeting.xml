@@ -12,9 +12,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_meeting"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#80F4F1F1"
-        tools:context=".mareu.views.AddMeetingActivity">
+        tools:context=".mareu.ui.add.AddMeetingActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -37,7 +37,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/meeting_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +53,6 @@
             app:helperText="Enter meeting name please"
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:startIconDrawable="@drawable/ic_baseline_drive_file_rename_outline_24">
@@ -81,9 +80,8 @@
             app:helperText="Choose your room"
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/meeting_name"
             app:startIconDrawable="@drawable/ic_baseline_room_preferences_24">
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -97,7 +95,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
-            android:id="@+id/date"
+            android:id="@+id/date_setter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -107,20 +105,94 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dropdown_menu" />
 
+        <Button
+            android:id="@+id/date_choose_button"
+            android:layout_width="212dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="32dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dropdown_menu" />
+
 
         <EditText
-            android:id="@+id/time"
+            android:id="@+id/time_setter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="128dp"
             android:ems="10"
             android:hint="Enter Time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_setter" />
+
+
+        <Button
+            android:id="@+id/time_choose_button"
+            android:layout_width="212dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="32dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_setter" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/mailinglist_edit"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Mailing list"
+            app:boxBackgroundColor="@color/white"
+            app:boxBackgroundMode="outline"
+            app:helperText="Enter participants mail"
+            app:helperTextEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time_setter"
+            app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/add_mail_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="256dp"
+            android:text="Add mail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mailinglist_edit">
+
+        </Button>
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date" />
+            app:layout_constraintTop_toBottomOf="@+id/add_mail_button">
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip4"
+                android:text="example@mails.com"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.chip.ChipGroup>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

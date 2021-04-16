@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/favorite"
+        android:title="Filters"
+        android:id="@+id/filters"
         android:icon="@drawable/ic_baseline_filter_list_24"
-        android:title="meeting filters"
-        android:contentDescription="filter your meeting list"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom">
+
+        <menu>
+
+            <item
+                android:id="@+id/room_filter"
+                android:title="Choose your meeting by room"
+                app:showAsAction="never">
+
+                <menu>
+
+                    <item
+                        android:id="@+id/peach"
+                        android:title="Peach"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/mario"
+                        android:title="Mario"
+                        app:showAsAction="never">
+
+                    </item>
+
+                </menu>
+
+            </item>
+
+            <item
+                android:id="@+id/date_filter"
+                android:title="Choose your meeting by date"
+                app:showAsAction="never">
+
+            </item>
+
+
+
+        </menu>
+
+    </item>
 
 </menu>

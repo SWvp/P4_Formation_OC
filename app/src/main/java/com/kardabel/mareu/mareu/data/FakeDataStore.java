@@ -1,6 +1,7 @@
 package com.kardabel.mareu.mareu.data;
 
 import com.kardabel.mareu.mareu.model.Meeting;
+import com.kardabel.mareu.mareu.model.Room;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,9 +12,12 @@ import java.util.List;
  */
 public class FakeDataStore {
 
+    private static List<String> list = Arrays.asList("example@example");
     public static List<Meeting> Fake_Meetings = Arrays.asList(
-            new Meeting(1,"Reuninon A","https://www.nicepng.com/png/full/32-328642_user-avatar-super-mario-avatar.png", "11h20", "Mario", "blake@gpamail.com"),
-            new Meeting(2,"Reuninon B","https://www.nicepng.com/png/full/6-62950_paper-peach-color-splash-paper-mario-color-splash.png", "08h20", "Peach", "garogorille@gtromail.com")
+            new Meeting(0,"Reuninon A", Room.ROOM_MARIO, "11h20", Room.ROOM_MARIO, list),
+            new Meeting(1,"Reuninon B",Room.ROOM_PEACH, "08h20", Room.ROOM_PEACH, list),
+            new Meeting(2,"Reuninon c",Room.ROOM_GOOMBA, "15h30", Room.ROOM_GOOMBA, list),
+            new Meeting(3,"Reuninon D",Room.ROOM_BOO, "13h00", Room.ROOM_BOO, list)
     );
 
 

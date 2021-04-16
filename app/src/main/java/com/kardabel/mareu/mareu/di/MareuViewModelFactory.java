@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.kardabel.mareu.mareu.repository.MeetingsRepository;
-import com.kardabel.mareu.mareu.viewmodel.MeetingActivityViewModel;
+import com.kardabel.mareu.mareu.ui.list.MeetingViewModel;
 
 /**
  * Created by stéphane Warin OCR on 01/04/2021.
@@ -35,8 +35,8 @@ public class MareuViewModelFactory implements ViewModelProvider.Factory {
   @NonNull
   @Override
   public <T extends ViewModel> T create(Class<T> modelClass) {
-      if (modelClass.isAssignableFrom(MeetingActivityViewModel.class)) {
-          return (T) new MeetingActivityViewModel(new MeetingsRepository());
+      if (modelClass.isAssignableFrom(MeetingViewModel.class)) {
+          return (T) new MeetingViewModel(new MeetingsRepository());
       }
 
       throw new IllegalArgumentException("Unknown ViewModel class");
