@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.list;
+package com.kardabel.mareu.mareu.ui.add;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -18,16 +18,14 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.kardabel.mareu.R;
-
-import java.util.regex.Pattern;
+import com.kardabel.mareu.mareu.ui.DatePickerFragment;
 
 /**
  * Created by stéphane Warin OCR on 26/03/2021.
  */
 public class AddMeetingActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
-    private TextInputLayout mTextInputLayout;
-    private AutoCompleteTextView mAutoCompleteTextView;
+    private AutoCompleteTextView roomSelect;
     private TextInputLayout email;
 
     @Override
@@ -35,8 +33,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addmeeting);
 
-        mTextInputLayout = findViewById(R.id.dropdown_menu);
-        mAutoCompleteTextView = findViewById(R.id.dropdown_autocomplete);
+        roomSelect = findViewById(R.id.dropdown_autocomplete);
 
         //Dropdown room choice menu
         String[] items = new String[]{
@@ -49,7 +46,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
                 items
         );
 
-        mAutoCompleteTextView.setAdapter(adapter);
+        roomSelect.setAdapter(adapter);
 
         //Time popup
         Button timeButton = (Button) findViewById(R.id.time_choose_button);
@@ -96,9 +93,9 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
     }
 
     private boolean validateEmailAddress(TextInputLayout email){
-        String emailInput = email.getEditText().toString();
+        String emailInput = email.getEditText().getText().toString();
 
-        if(!emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+        if(!emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).find()){
             Toast.makeText(this, "email valid", Toast.LENGTH_SHORT).show();
             return true;
         }else{

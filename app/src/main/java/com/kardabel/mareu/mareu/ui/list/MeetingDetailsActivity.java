@@ -8,40 +8,49 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.kardabel.mareu.R;
+import com.kardabel.mareu.mareu.di.MareuViewModelFactory;
 import com.kardabel.mareu.mareu.model.Meeting;
+import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewModel;
+import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewState;
+
+import java.util.List;
 
 /**
  * Created by stéphane Warin OCR on 26/03/2021.
  */
 public class MeetingDetailsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_DETAILS = "EXTRA_DETAILS";
-    public static final String EXTRA_ROOM = "EXTRA_ROOM";
-    public static final String EXTRA_DATE = "EXTRA_DATE";
-    public static final String EXTRA_MAILINGLIST = "EXTRA_MAILINGLIST";
+    public static final String EXTRA_MEETINGID = "EXTRA_MEETINGID";
+
     private TextView meetingDetails;
     private ImageView meetingAvatar;
     private TextView roomMeetingName;
+    private DetailsActivityViewModel detailsActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetings_details);
 
+        detailsActivityViewModel =
+                new ViewModelProvider(this, MareuViewModelFactory.getInstance()).get(DetailsActivityViewModel.class);
+
+        DetailsActivityViewState viewState;
+
+
         meetingDetails = findViewById(R.id.meeting_name);
         meetingAvatar = findViewById(R.id.room_avatar);
         roomMeetingName = findViewById(R.id.room_name);
 
         Intent intent = getIntent();
-        Bundle bundle = getIntent().getExtras();
 
-        meetingDetails.setText(intent.getStringExtra(EXTRA_DETAILS));
-        roomMeetingName.setText(intent.getStringExtra(EXTRA_ROOM));
+        detailsActivityViewModel.init(intent.getIntExtra(EXTRA_MEETINGID, -1));
 
-        int picture = bundle.getInt("picture");
-        meetingAvatar.setImageResource(picture);
+        //meetingDetails.setText(viewState.getMeetingName());
 
 
 

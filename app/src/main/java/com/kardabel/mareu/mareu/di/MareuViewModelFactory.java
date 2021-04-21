@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.kardabel.mareu.mareu.repository.MeetingsRepository;
+import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewModel;
 import com.kardabel.mareu.mareu.ui.list.MeetingViewModel;
 
 /**
@@ -13,6 +14,7 @@ import com.kardabel.mareu.mareu.ui.list.MeetingViewModel;
 public class MareuViewModelFactory implements ViewModelProvider.Factory {
 
   private static MareuViewModelFactory sFactory;
+
 
 
   private MareuViewModelFactory() {
@@ -37,6 +39,9 @@ public class MareuViewModelFactory implements ViewModelProvider.Factory {
   public <T extends ViewModel> T create(Class<T> modelClass) {
       if (modelClass.isAssignableFrom(MeetingViewModel.class)) {
           return (T) new MeetingViewModel(new MeetingsRepository());
+      }
+      else if(modelClass.isAssignableFrom(DetailsActivityViewModel.class)){
+          return (T) new DetailsActivityViewModel(new MeetingsRepository());
       }
 
       throw new IllegalArgumentException("Unknown ViewModel class");

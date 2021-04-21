@@ -44,4 +44,5 @@ public class MeetingsRepository {
     public LiveData<List<Meeting>> getMeetingsList() {
         return mutableMeetingList;
     }
+
 }

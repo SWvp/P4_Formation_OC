@@ -4,45 +4,52 @@ import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
+import androidx.lifecycle.ViewModel;
 
 import com.kardabel.mareu.mareu.model.Meeting;
 import com.kardabel.mareu.mareu.repository.MeetingsRepository;
-import com.kardabel.mareu.mareu.ui.MeetingsViewState;
+import com.kardabel.mareu.mareu.ui.list.MeetingsViewState;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by stéphane Warin OCR on 08/04/2021.
- */
-public class DetailsActivityViewModel {
+public class DetailsActivityViewModel extends ViewModel {
     private MeetingsRepository mMeetingsRepository;
-    private LiveData<List<DetailsActivityViewState>> meetingsListLiveData;
+    private LiveData<DetailsActivityViewState> meetingsDetailsLiveData;
+
+    private int meetingId = -1;
 
     public DetailsActivityViewModel(@NonNull MeetingsRepository meetingsRepository) {
         mMeetingsRepository = meetingsRepository;
-        meetingsListLiveData = Transformations.map(mMeetingsRepository.getMeetingsList(), new Function<List<Meeting>, List<DetailsActivityViewState>>() {
+        meetingsDetailsLiveData = Transformations.map(mMeetingsRepository.getMeetingsList(), new Function<List<Meeting>, DetailsActivityViewState>() {
             @Override
-            public List<DetailsActivityViewState> apply(List<Meeting> meetingList) {
-                return map(meetingList);
+            public DetailsActivityViewState apply(List<Meeting> meeting) {
+                return map(meeting);
             }
         });
     }
 
-    private List<DetailsActivityViewState> map(List<Meeting> meetingList){
-        List<DetailsActivityViewState> result = new ArrayList<>();
+    public void init(int meetingId){
+        this.meetingId = meetingId;
+    }
+
+    private DetailsActivityViewState map(List<Meeting> meetingList){
+        DetailsActivityViewState result = null;
 
         for (Meeting meeting: meetingList) {
-            String humanReadableHour = meeting.getMeetingHour();
+            if (meetingId == meeting.getMeetingId()) {
+                String humanReadableHour = meeting.getMeetingHour();
 
-            result.add(new DetailsActivityViewState(
-                    meeting.getMeetingId(),
-                    meeting.getMeetingName(),
-                    meeting.getMeetingHour(),
-                    meeting.getRoomName().getRoomMeetingName(),
-                    meeting.getRoomAvatar().getDrawableRoomIcon(),
-                    meeting.getMailingList()
-            ));
+                result = new DetailsActivityViewState(
+                        meeting.getMeetingId(),
+                        meeting.getMeetingName(),
+                        meeting.getMeetingHour(),
+                        meeting.getRoomName().getRoomMeetingName(),
+                        meeting.getRoomAvatar().getDrawableRoomIcon(),
+                        meeting.getMailingList()
+                );
+
+            }
         }
         return result;
     }

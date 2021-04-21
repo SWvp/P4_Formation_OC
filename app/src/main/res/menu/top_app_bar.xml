@@ -13,7 +13,7 @@
 
             <item
                 android:id="@+id/room_filter"
-                android:title="Choose your meeting by room"
+                android:title="Choose a room"
                 app:showAsAction="never">
 
                 <menu>
@@ -32,13 +32,76 @@
 
                     </item>
 
+                    <item
+                        android:id="@+id/luigi"
+                        android:title="Luigi"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/toad"
+                        android:title="Toad"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/yoshi"
+                        android:title="Yoshi"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/donkey"
+                        android:title="Donkey"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/koopa"
+                        android:title="Koopa"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/boo"
+                        android:title="Boo"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/goomba"
+                        android:title="Goomba"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/kamek"
+                        android:title="Kamek"
+                        app:showAsAction="never">
+
+                    </item>
+
+                    <item
+                        android:id="@+id/allMeeting"
+                        android:title="ALL ROOM"
+                        app:showAsAction="never">
+
+                    </item>
+
                 </menu>
 
             </item>
 
             <item
                 android:id="@+id/date_filter"
-                android:title="Choose your meeting by date"
+                android:title="Choose a date"
                 app:showAsAction="never">
 
             </item>

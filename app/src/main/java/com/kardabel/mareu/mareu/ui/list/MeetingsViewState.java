@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui;
+package com.kardabel.mareu.mareu.ui.list;
 
 import androidx.annotation.DrawableRes;
 
@@ -9,15 +9,17 @@ import java.util.List;
  */
 public class MeetingsViewState {
     private final int meetingId;
+    private final String meetingDate;
     private final String meetingDetails;
     private final String roomName;
     @DrawableRes
     private final int avatarIcon;
-    private final List<String> mailingList;
+    private final String mailingList;
 
 
-    public MeetingsViewState(int meetingId, String meetingDetails, String roomName, @DrawableRes int avatarIcon, List<String> mailingList) {
+    public MeetingsViewState(int meetingId, String meetingDate, String meetingDetails, String roomName, @DrawableRes int avatarIcon, String mailingList) {
         this.meetingId = meetingId;
+        this.meetingDate = meetingDate;
         this.meetingDetails = meetingDetails;
         this.roomName = roomName;
         this.avatarIcon = avatarIcon;
@@ -29,12 +31,17 @@ public class MeetingsViewState {
         return meetingId;
     }
 
+    public String getMeetingDateToDisplay(){
+        return meetingDate;
+
+    }
+
     public String getMeetingDetailsToDisplay(){
         return meetingDetails;
 
     }
 
-    public String getRoomName(){
+    public String getRoomNameToDisplay(){
         return roomName;
 
     }
@@ -44,7 +51,7 @@ public class MeetingsViewState {
 
     }
 
-    public List<String> getMailingListToDisplay(){
+    public String getMailingListToDisplay(){
         return mailingList;
 
     }

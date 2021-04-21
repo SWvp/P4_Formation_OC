@@ -8,14 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.kardabel.mareu.R;
-import com.kardabel.mareu.mareu.model.Meeting;
+import com.kardabel.mareu.mareu.ui.list.MeetingsViewState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +42,7 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
         MeetingsViewState meeting = meetings.get(position);
 
         holder.meetingDetails.setText(meeting.getMeetingDetailsToDisplay());
-        //holder.mailingList.setText(meeting.getMailingListToDisplay());
+        holder.mailingList.setText(meeting.getMailingListToDisplay());
         Glide.with(holder.roomAvatar.getContext())
                 .load(meeting.getAvatarToDisplay())
                 .apply(RequestOptions.circleCropTransform())

@@ -8,9 +8,10 @@ import com.kardabel.mareu.R;
  * Created by stéphane Warin OCR on 12/04/2021.
  */
 public enum Room {
+    ROOM_RESET(R.drawable.peach, "Reset"),
     ROOM_PEACH(R.drawable.peach, "Peach"),
     ROOM_MARIO(R.drawable.mario, "Mario"),
-    OOM_LUIGI(R.drawable.luigi, "Luigi"),
+    ROOM_LUIGI(R.drawable.luigi, "Luigi"),
     ROOM_TOAD(R.drawable.toad, "Toad"),
     ROOM_YOSHI(R.drawable.yoshi, "Yoshi"),
     ROOM_DONKEY(R.drawable.donkey, "Donkey"),

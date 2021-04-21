@@ -19,7 +19,7 @@
 
 
         <activity
-            android:name=".mareu.ui.list.AddMeetingActivity"
+            android:name=".mareu.ui.add.AddMeetingActivity"
             android:screenOrientation="sensor" />
 
 

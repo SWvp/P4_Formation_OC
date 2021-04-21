@@ -1,6 +1,8 @@
 package com.kardabel.mareu.mareu.model;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -10,14 +12,16 @@ public class Meeting {
     private int meetingId;
     private String meetingName;
     private String hour;
+    private String date;
     private Room roomName;
     private Room roomAvatar;
     private List<String> mailingList;
 
-    public Meeting(int meetingId, String meetingName, Room avatar, String hour, Room roomName, List<String> mailingList) {
+    public Meeting(int meetingId, String meetingName, Room avatar, String hour, String date, Room roomName, List<String> mailingList) {
         this.meetingId = meetingId;
         this.meetingName = meetingName;
         this.hour = hour;
+        this.date = date;
         this.roomName = roomName;
         this.roomAvatar = avatar;
         this.mailingList = mailingList;
@@ -28,6 +32,8 @@ public class Meeting {
     public String getMeetingName() { return meetingName; }
 
     public String getMeetingHour() { return hour; }
+
+    public String getMeetingDate() { return date; }
 
     public Room getRoomName() { return roomName; }
 

@@ -13,16 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topbar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title="Maréu"
+            android:elevation="4dp"
+            app:title="MAREU"
+            app:titleTextColor="@color/white"
+            android:clickable="true"
             app:menu="@menu/top_app_bar"
-            app:titleTextColor="@color/white">
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-        </com.google.android.material.appbar.MaterialToolbar>
+        </androidx.appcompat.widget.Toolbar>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.list;
+package com.kardabel.mareu.mareu.ui.add;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -22,9 +22,9 @@ public class TimePickerFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Calendar time = Calendar.getInstance();
-        int hour = time.get(Calendar.HOUR_OF_DAY);
-        int minute = time.get(Calendar.MINUTE);
+        LocalTime time = LocalTime.now();
+        int hour = time.getHour();
+        int minute = time.getMinute();
 
         return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(), hour, minute, DateFormat.is24HourFormat(getActivity()));
     }

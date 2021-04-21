@@ -27,11 +27,11 @@ public class DetailsActivityViewState extends ViewModel {
         this.mailingList = mailingList;
     }
 
-    public int getDetailsMeetingId() {
+    public int getMeetingId() {
         return meetingId;
     }
 
-    public String getDetailsMeetingName() {
+    public String getMeetingName() {
         return meetingName;
     }
 
