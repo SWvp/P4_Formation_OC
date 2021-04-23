@@ -24,7 +24,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kardabel.mareu.R;
 import com.kardabel.mareu.mareu.di.MareuViewModelFactory;
 import com.kardabel.mareu.mareu.model.Room;
-import com.kardabel.mareu.mareu.ui.MeetingsRecyclerViewAdapter;
 import com.kardabel.mareu.mareu.ui.add.AddMeetingActivity;
 import com.kardabel.mareu.mareu.ui.DatePickerFragment;
 
@@ -32,7 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
 
-    private MeetingViewModel meetingViewModel;
+    private MainViewModel mMainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +47,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         MeetingsRecyclerViewAdapter mAdapter = new MeetingsRecyclerViewAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        meetingViewModel =
-                new ViewModelProvider(this, MareuViewModelFactory.getInstance()).get(MeetingViewModel.class);
+        mMainViewModel =
+                new ViewModelProvider(this, MareuViewModelFactory.getInstance()).get(MainViewModel.class);
 
-        meetingViewModel.getMeetingsListLiveData().observe(this, new Observer<List<MeetingsViewState>>() {
+        mMainViewModel.getMeetingsListLiveData().observe(this, new Observer<List<MainViewState>>() {
             @Override
-            public void onChanged(List<MeetingsViewState> meetings) {
+            public void onChanged(List<MainViewState> meetings) {
                 mAdapter.setMeetings(meetings);
 
             }
@@ -70,13 +69,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
-        //launch details meeting activity
+        //Delete Button, launch details from recycler items
         mAdapter.setOnItemClickListener(new MeetingsRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onMeetingItemClick(MeetingsViewState meeting) {
-                Intent intent = new Intent(MainActivity.this, MeetingDetailsActivity.class);
-                intent.putExtra(MeetingDetailsActivity.EXTRA_MEETINGID, meeting.getMeetingId());
-                intent.putExtra("picture", meeting.getAvatarToDisplay());
+            public void onMeetingItemClick(MainViewState meeting) {
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                intent.putExtra(DetailsActivity.EXTRA_MEETINGID, meeting.getMeetingId());
                 startActivity(intent);
 
             }
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             //callback delete button
             @Override
             public void onDeleteMeetingClick(int meeting) {
-                meetingViewModel.deleteMeeting(meeting);
+                mMainViewModel.deleteMeeting(meeting);
 
             }
         });
@@ -99,45 +97,49 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     }
 
+    //Filters action on viewmodel
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
-        {   case R.id.date_filter:
-            DialogFragment datePicker = new DatePickerFragment();
-            datePicker.show(getSupportFragmentManager(), "filter date picker");
+        { case R.id.reset_filter:
+                mMainViewModel.resetFilter(true);
+                return true;
+            case R.id.date_filter:
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "filter date picker");
                 return true;
             case R.id.peach:
-                meetingViewModel.roomFilterValue(Room.ROOM_PEACH);
+                mMainViewModel.roomFilterValue(Room.ROOM_PEACH);
                 return true;
             case R.id.mario:
-                meetingViewModel.roomFilterValue(Room.ROOM_MARIO);
+                mMainViewModel.roomFilterValue(Room.ROOM_MARIO);
                 return true;
             case R.id.luigi:
-                meetingViewModel.roomFilterValue(Room.ROOM_LUIGI);
+                mMainViewModel.roomFilterValue(Room.ROOM_LUIGI);
                 return true;
             case R.id.toad:
-                meetingViewModel.roomFilterValue(Room.ROOM_TOAD);
+                mMainViewModel.roomFilterValue(Room.ROOM_TOAD);
                 return true;
             case R.id.yoshi:
-                meetingViewModel.roomFilterValue(Room.ROOM_YOSHI);
+                mMainViewModel.roomFilterValue(Room.ROOM_YOSHI);
                 return true;
             case R.id.donkey:
-                meetingViewModel.roomFilterValue(Room.ROOM_DONKEY);
+                mMainViewModel.roomFilterValue(Room.ROOM_DONKEY);
                 return true;
             case R.id.koopa:
-                meetingViewModel.roomFilterValue(Room.ROOM_KOOPA);
+                mMainViewModel.roomFilterValue(Room.ROOM_KOOPA);
                 return true;
             case R.id.boo:
-                meetingViewModel.roomFilterValue(Room.ROOM_BOO);
+                mMainViewModel.roomFilterValue(Room.ROOM_BOO);
                 return true;
             case R.id.goomba:
-                meetingViewModel.roomFilterValue(Room.ROOM_GOOMBA);
+                mMainViewModel.roomFilterValue(Room.ROOM_GOOMBA);
                 return true;
             case R.id.kamek:
-                meetingViewModel.roomFilterValue(Room.ROOM_KAMEK);
+                mMainViewModel.roomFilterValue(Room.ROOM_KAMEK);
                 return true;
             case R.id.allMeeting:
-                meetingViewModel.roomFilterValue(Room.ROOM_RESET);
+                mMainViewModel.roomFilterValue(Room.ROOM_RESET);
                 return true;
 
             default:
@@ -146,12 +148,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
+    //When time filter picked
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = "";
-        //convertir les valeurs en string
-        //les concaténer, puis les envoyer
-        meetingViewModel.dateFilterValue(date);
+        mMainViewModel.onDateSetMainViewModel(view, year, month, dayOfMonth);
 
     }
 }

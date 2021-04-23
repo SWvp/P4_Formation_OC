@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.add;
+package com.kardabel.mareu.mareu.ui;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

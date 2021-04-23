@@ -24,6 +24,7 @@ public class MeetingsRepository {
     public void insertMeeting(Meeting meeting){
         nMeetings.add(meeting);
         mutableMeetingList.setValue(nMeetings);
+
     }
 
     public void deleteMeeting(int meetingId){
@@ -31,9 +32,11 @@ public class MeetingsRepository {
             Meeting meeting = iterator.next();
             if(meeting.getMeetingId()==meetingId){
                 iterator.remove();
+
             }
         }
         mutableMeetingList.setValue(nMeetings);
+
     }
 
     public void deleteAllMeetings(){

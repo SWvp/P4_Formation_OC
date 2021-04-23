@@ -8,9 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.kardabel.mareu.mareu.model.Meeting;
 import com.kardabel.mareu.mareu.repository.MeetingsRepository;
-import com.kardabel.mareu.mareu.ui.list.MeetingsViewState;
+import com.kardabel.mareu.mareu.ui.list.MainViewState;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsActivityViewModel extends ViewModel {
@@ -25,6 +24,7 @@ public class DetailsActivityViewModel extends ViewModel {
             @Override
             public DetailsActivityViewState apply(List<Meeting> meeting) {
                 return map(meeting);
+
             }
         });
     }
@@ -44,13 +44,17 @@ public class DetailsActivityViewModel extends ViewModel {
                         meeting.getMeetingId(),
                         meeting.getMeetingName(),
                         meeting.getMeetingHour(),
+                        meeting.getMeetingDate(),
                         meeting.getRoomName().getRoomMeetingName(),
                         meeting.getRoomAvatar().getDrawableRoomIcon(),
                         meeting.getMailingList()
-                );
 
+                );
             }
         }
         return result;
+
     }
+
+    public LiveData<DetailsActivityViewState> getDetailsLiveData(){ return meetingsDetailsLiveData; }
 }

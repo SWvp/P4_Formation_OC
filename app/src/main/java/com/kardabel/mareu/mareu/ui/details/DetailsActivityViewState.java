@@ -13,30 +13,36 @@ public class DetailsActivityViewState extends ViewModel {
     private final int meetingId;
     private final String meetingName;
     private final String hour;
+    private final String date;
     private final String roomName;
     @DrawableRes
     private final int avatarIcon;
     private final List<String> mailingList;
 
-    public DetailsActivityViewState(int meetingId, String meetingName, String hour, String roomName, int avatarIcon, List<String> mailingList) {
+    public DetailsActivityViewState(int meetingId, String meetingName, String hour, String date, String roomName, int avatarIcon, List<String> mailingList) {
         this.meetingId = meetingId;
         this.meetingName = meetingName;
         this.hour = hour;
+        this.date = date;
         this.roomName = roomName;
         this.avatarIcon = avatarIcon;
         this.mailingList = mailingList;
     }
 
-    public int getMeetingId() {
+    public int getDetailsMeetingId() {
         return meetingId;
     }
 
-    public String getMeetingName() {
+    public String getDetailsMeetingName() {
         return meetingName;
     }
 
     public String getDetailsHour() {
         return hour;
+    }
+
+    public String getDetailsDate() {
+        return date;
     }
 
     public String getDetailsRoomName() {

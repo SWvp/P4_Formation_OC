@@ -27,6 +27,7 @@ public enum Room {
     Room(int roomIcon, String roomName) {
         this.roomIcon = roomIcon;
         this.roomName =roomName;
+
     }
 
     public int getDrawableRoomIcon(){
@@ -34,4 +35,5 @@ public enum Room {
     }
 
     public String getRoomMeetingName(){ return roomName; }
+
 }

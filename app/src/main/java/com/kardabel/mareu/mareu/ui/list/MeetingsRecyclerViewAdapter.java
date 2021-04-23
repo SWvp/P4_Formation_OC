@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui;
+package com.kardabel.mareu.mareu.ui.list;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.kardabel.mareu.R;
-import com.kardabel.mareu.mareu.ui.list.MeetingsViewState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +22,12 @@ import java.util.List;
  */
 public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRecyclerViewAdapter.ViewHolder> {
 
-    private List<MeetingsViewState> meetings = new ArrayList<>();
+    private List<MainViewState> meetings = new ArrayList<>();
     private OnItemClickListener listener;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_mareu_item, parent, false);
         return new ViewHolder(itemView);
@@ -38,8 +36,7 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
 
     @Override
     public void onBindViewHolder(@NonNull MeetingsRecyclerViewAdapter.ViewHolder holder, int position) {
-
-        MeetingsViewState meeting = meetings.get(position);
+        MainViewState meeting = meetings.get(position);
 
         holder.meetingDetails.setText(meeting.getMeetingDetailsToDisplay());
         holder.mailingList.setText(meeting.getMailingListToDisplay());
@@ -51,16 +48,16 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 listener.onMeetingItemClick(meeting);
+
             }
         });
 
         holder.deleteMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 listener.onDeleteMeetingClick(meeting.getMeetingId());
+
             }
         });
 
@@ -70,14 +67,17 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     public int getItemCount() {
         if (meetings == null){
             return 0;
+
         }
         else
             return meetings.size();
+
     }
 
-    public void setMeetings(List<MeetingsViewState> meetings){
+    public void setMeetings(List<MainViewState> meetings){
         this.meetings = meetings;
         notifyDataSetChanged();
+
     }
 
 
@@ -97,7 +97,7 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     }
 
     public interface OnItemClickListener{
-        void onMeetingItemClick(MeetingsViewState meeting);
+        void onMeetingItemClick(MainViewState meeting);
         void onDeleteMeetingClick(int meeting);
 
     }

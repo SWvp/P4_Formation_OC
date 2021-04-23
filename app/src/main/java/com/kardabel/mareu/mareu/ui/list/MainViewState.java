@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by stéphane Warin OCR on 01/04/2021.
  */
-public class MeetingsViewState {
+public class MainViewState {
     private final int meetingId;
     private final String meetingDate;
     private final String meetingDetails;
@@ -17,7 +17,7 @@ public class MeetingsViewState {
     private final String mailingList;
 
 
-    public MeetingsViewState(int meetingId, String meetingDate, String meetingDetails, String roomName, @DrawableRes int avatarIcon, String mailingList) {
+    public MainViewState(int meetingId, String meetingDate, String meetingDetails, String roomName, @DrawableRes int avatarIcon, String mailingList) {
         this.meetingId = meetingId;
         this.meetingDate = meetingDate;
         this.meetingDetails = meetingDetails;

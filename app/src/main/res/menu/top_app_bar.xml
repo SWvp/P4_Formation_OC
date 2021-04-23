@@ -106,6 +106,13 @@
 
             </item>
 
+            <item
+                android:id="@+id/reset_filter"
+                android:title="RESET FILTERS"
+                app:showAsAction="never">
+
+            </item>
+
 
 
         </menu>

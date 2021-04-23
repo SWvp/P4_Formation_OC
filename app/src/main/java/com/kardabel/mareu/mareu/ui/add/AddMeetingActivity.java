@@ -2,8 +2,11 @@ package com.kardabel.mareu.mareu.ui.add;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -13,29 +16,41 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.kardabel.mareu.R;
+import com.kardabel.mareu.mareu.di.MareuViewModelFactory;
 import com.kardabel.mareu.mareu.ui.DatePickerFragment;
+import com.kardabel.mareu.mareu.ui.TimePickerFragment;
+import com.kardabel.mareu.mareu.ui.list.MainViewModel;
 
-/**
- * Created by stéphane Warin OCR on 26/03/2021.
- */
 public class AddMeetingActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     private AutoCompleteTextView roomSelect;
     private TextInputLayout email;
+    private AddMeetingViewModel addMeetingViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addmeeting);
 
-        roomSelect = findViewById(R.id.dropdown_autocomplete);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_meeting_toolbar);
+        toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+
+        addMeetingViewModel =
+                new ViewModelProvider(this, MareuViewModelFactory.getInstance()).get(AddMeetingViewModel.class);
+
+        //Add name to meeting
+        EditText nameEditText = (EditText) findViewById(R.id.add_meeting_name);
 
         //Dropdown room choice menu
+        roomSelect = findViewById(R.id.dropdown_autocomplete);
         String[] items = new String[]{
                 "Peach", "Mario", "Luigi", "Toad", "Yoshi", "Donkey", "Koopa", "Boo",
                 "Goomba", "Kamek",
@@ -45,7 +60,6 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
                 R.layout.activity_addmeeting_dropdown_item,
                 items
         );
-
         roomSelect.setAdapter(adapter);
 
         //Time popup
@@ -64,6 +78,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             public void onClick(View v) {
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(), "date picker");
+
             }
         });
 
@@ -74,21 +89,31 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             @Override
             public void onClick(View v) {
                 validateEmailAddress(email);
+
+            }
+        });
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
             }
         });
     }
 
-    //Time and date text input
+    //Time/date text input
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        EditText editText = (EditText) findViewById(R.id.time_setter);
-        editText.setText(hourOfDay + "h" + minute);
+        EditText timeEditText = (EditText) findViewById(R.id.time_setter);
+        addMeetingViewModel.onTimeSetAddMeetingViewModel(view, hourOfDay, minute, timeEditText);
+
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        EditText dateSet = (EditText) findViewById(R.id.date_setter);
-        dateSet.setText(year + "/" + month + "/" + dayOfMonth);
+        EditText dateEditText = (EditText) findViewById(R.id.date_setter);
+        addMeetingViewModel.onDateSetAddMeetingViewModel(view, year, month, dayOfMonth, dateEditText);
 
     }
 
@@ -97,11 +122,19 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
 
         if(!emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).find()){
             Toast.makeText(this, "email valid", Toast.LENGTH_SHORT).show();
+            addMeetingViewModel.addEmails(emailInput);
             return true;
+
         }else{
             Toast.makeText(this, "invalid adress", Toast.LENGTH_SHORT).show();
             return false;
-        }
 
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        addMeetingViewModel.insertMeeting();
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -44,5 +44,19 @@ public class Meeting {
     public List<String> getMailingList() {
         return mailingList;
     }
+
+    public boolean completeReunion(Meeting meeting)
+    {
+        if (meetingName != null && hour != null && date !=null && roomName!= null && mailingList!= null)
+        {
+            return true;
+
+        }
+        else
+        {
+            return false;
+
+        }
+    }
 }
 

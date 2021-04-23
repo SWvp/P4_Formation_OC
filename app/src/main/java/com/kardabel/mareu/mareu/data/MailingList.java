@@ -1,7 +1,17 @@
 package com.kardabel.mareu.mareu.data;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.kardabel.mareu.R;
+import com.kardabel.mareu.mareu.di.MareuViewModelFactory;
 import com.kardabel.mareu.mareu.model.Meeting;
 import com.kardabel.mareu.mareu.model.Room;
+import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewModel;
+import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,3 +42,8 @@ public class MailingList {
         return mailingLists;
     }
 }
+
+
+
+
+

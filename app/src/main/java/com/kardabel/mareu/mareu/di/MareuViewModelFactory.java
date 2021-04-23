@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.kardabel.mareu.mareu.repository.MeetingsRepository;
+import com.kardabel.mareu.mareu.ui.add.AddMeetingViewModel;
 import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewModel;
-import com.kardabel.mareu.mareu.ui.list.MeetingViewModel;
+import com.kardabel.mareu.mareu.ui.list.MainViewModel;
 
 /**
  * Created by stéphane Warin OCR on 01/04/2021.
@@ -14,11 +15,6 @@ import com.kardabel.mareu.mareu.ui.list.MeetingViewModel;
 public class MareuViewModelFactory implements ViewModelProvider.Factory {
 
   private static MareuViewModelFactory sFactory;
-
-
-
-  private MareuViewModelFactory() {
-  }
 
   public static MareuViewModelFactory getInstance() {
       if (sFactory == null) {
@@ -29,21 +25,27 @@ public class MareuViewModelFactory implements ViewModelProvider.Factory {
               }
           }
       }
-
       return sFactory;
-  }
 
+  }
 
   @NonNull
   @Override
   public <T extends ViewModel> T create(Class<T> modelClass) {
-      if (modelClass.isAssignableFrom(MeetingViewModel.class)) {
-          return (T) new MeetingViewModel(new MeetingsRepository());
+      if (modelClass.isAssignableFrom(MainViewModel.class)) {
+          return (T) new MainViewModel(new MeetingsRepository());
+
       }
       else if(modelClass.isAssignableFrom(DetailsActivityViewModel.class)){
           return (T) new DetailsActivityViewModel(new MeetingsRepository());
+
+      }
+      else if(modelClass.isAssignableFrom(AddMeetingViewModel.class)){
+          return (T) new AddMeetingViewModel(new MeetingsRepository());
+
       }
 
       throw new IllegalArgumentException("Unknown ViewModel class");
+
   }
 }
