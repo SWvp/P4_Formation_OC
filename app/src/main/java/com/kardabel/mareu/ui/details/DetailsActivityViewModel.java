@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.details;
+package com.kardabel.mareu.ui.details;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -6,9 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.kardabel.mareu.mareu.model.Meeting;
-import com.kardabel.mareu.mareu.repository.MeetingsRepository;
-import com.kardabel.mareu.mareu.ui.list.MainViewState;
+import com.kardabel.mareu.model.Meeting;
+import com.kardabel.mareu.repository.MeetingsRepository;
 
 import java.util.List;
 

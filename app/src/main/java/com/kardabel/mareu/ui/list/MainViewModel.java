@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.list;
+package com.kardabel.mareu.ui.list;
 
 import android.widget.DatePicker;
 
@@ -10,21 +10,21 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.kardabel.mareu.mareu.model.Meeting;
-import com.kardabel.mareu.mareu.model.Room;
-import com.kardabel.mareu.mareu.repository.MeetingsRepository;
+import com.kardabel.mareu.model.Meeting;
+import com.kardabel.mareu.model.Room;
+import com.kardabel.mareu.repository.MeetingsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainViewModel extends ViewModel {
 
-    private MeetingsRepository mMeetingsRepository;
+    private final MeetingsRepository mMeetingsRepository;
 
-    private MediatorLiveData<List<MainViewState>> meetingsListMediatorLiveData = new MediatorLiveData<>();
+    private final MediatorLiveData<List<MainViewState>> meetingsListMediatorLiveData = new MediatorLiveData<>();
 
-    private MutableLiveData<Room> roomFilterMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> dateFilterMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Room> roomFilterMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> dateFilterMutableLiveData = new MutableLiveData<>();
 
     //Observers Triggers
     public MainViewModel(@NonNull MeetingsRepository meetingsRepository) {
@@ -117,7 +117,7 @@ public class MainViewModel extends ViewModel {
     }
 
     public void roomFilterValue(Room room){
-        if(dateFilterMutableLiveData != null){
+        if(dateFilterMutableLiveData.getValue() != null){
             dateFilterMutableLiveData.setValue(null);
 
         }

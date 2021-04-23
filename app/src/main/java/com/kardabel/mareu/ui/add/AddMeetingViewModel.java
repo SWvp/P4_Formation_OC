@@ -1,22 +1,15 @@
-package com.kardabel.mareu.mareu.ui.add;
+package com.kardabel.mareu.ui.add;
 
-import android.util.Patterns;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.material.textfield.TextInputLayout;
-import com.kardabel.mareu.R;
-import com.kardabel.mareu.mareu.model.Meeting;
-import com.kardabel.mareu.mareu.repository.MeetingsRepository;
-import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewState;
+import com.kardabel.mareu.model.Meeting;
+import com.kardabel.mareu.repository.MeetingsRepository;
 
 import java.util.ArrayList;
 import java.util.List;

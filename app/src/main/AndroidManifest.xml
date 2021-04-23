@@ -14,17 +14,17 @@
         >
 
         <activity
-            android:name=".mareu.ui.list.DetailsActivity"
+            android:name=".ui.list.DetailsActivity"
             android:screenOrientation="sensor"/>
 
 
         <activity
-            android:name=".mareu.ui.add.AddMeetingActivity"
+            android:name=".ui.add.AddMeetingActivity"
             android:screenOrientation="sensor" />
 
 
         <activity
-            android:name=".mareu.ui.list.MainActivity"
+            android:name=".ui.list.MainActivity"
             android:screenOrientation="sensor">
             <intent-filter>
                 <action

@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.details;
+package com.kardabel.mareu.ui.details;
 
 import androidx.annotation.DrawableRes;
 import androidx.lifecycle.ViewModel;

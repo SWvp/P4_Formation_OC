@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.model;
+package com.kardabel.mareu.model;
 
 import androidx.annotation.DrawableRes;
 

@@ -1,11 +1,8 @@
-package com.kardabel.mareu.mareu.ui.list;
+package com.kardabel.mareu.ui.list;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,12 +12,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.kardabel.mareu.R;
-import com.kardabel.mareu.mareu.di.MareuViewModelFactory;
-import com.kardabel.mareu.mareu.model.Meeting;
-import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewModel;
-import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewState;
-
-import java.util.List;
+import com.kardabel.mareu.di.MareuViewModelFactory;
+import com.kardabel.mareu.model.Meeting;
+import com.kardabel.mareu.ui.details.DetailsActivityViewModel;
+import com.kardabel.mareu.ui.details.DetailsActivityViewState;
 
 /**
  * Created by stéphane Warin OCR on 26/03/2021.

@@ -1,17 +1,14 @@
-package com.kardabel.mareu.mareu.ui;
+package com.kardabel.mareu.ui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import java.time.LocalDate;
-import java.time.Month;
-import java.util.Calendar;
 
 /**
  * Created by stéphane Warin OCR on 15/04/2021.

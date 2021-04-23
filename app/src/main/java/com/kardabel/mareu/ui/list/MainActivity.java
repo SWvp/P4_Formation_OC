@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.list;
+package com.kardabel.mareu.ui.list;
 
 
 import android.app.DatePickerDialog;
@@ -22,10 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kardabel.mareu.R;
-import com.kardabel.mareu.mareu.di.MareuViewModelFactory;
-import com.kardabel.mareu.mareu.model.Room;
-import com.kardabel.mareu.mareu.ui.add.AddMeetingActivity;
-import com.kardabel.mareu.mareu.ui.DatePickerFragment;
+import com.kardabel.mareu.di.MareuViewModelFactory;
+import com.kardabel.mareu.model.Room;
+import com.kardabel.mareu.ui.add.AddMeetingActivity;
+import com.kardabel.mareu.ui.DatePickerFragment;
 
 import java.util.List;
 

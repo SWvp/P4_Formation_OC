@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui;
+package com.kardabel.mareu.ui;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -9,10 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
-import java.util.Calendar;
 
 /**
  * Created by stéphane Warin OCR on 09/04/2021.

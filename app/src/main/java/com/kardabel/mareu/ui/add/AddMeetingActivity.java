@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.add;
+package com.kardabel.mareu.ui.add;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -24,10 +24,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.kardabel.mareu.R;
-import com.kardabel.mareu.mareu.di.MareuViewModelFactory;
-import com.kardabel.mareu.mareu.ui.DatePickerFragment;
-import com.kardabel.mareu.mareu.ui.TimePickerFragment;
-import com.kardabel.mareu.mareu.ui.list.MainViewModel;
+import com.kardabel.mareu.di.MareuViewModelFactory;
+import com.kardabel.mareu.ui.DatePickerFragment;
+import com.kardabel.mareu.ui.TimePickerFragment;
 
 public class AddMeetingActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 

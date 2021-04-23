@@ -1,13 +1,13 @@
-package com.kardabel.mareu.mareu.di;
+package com.kardabel.mareu.di;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.kardabel.mareu.mareu.repository.MeetingsRepository;
-import com.kardabel.mareu.mareu.ui.add.AddMeetingViewModel;
-import com.kardabel.mareu.mareu.ui.details.DetailsActivityViewModel;
-import com.kardabel.mareu.mareu.ui.list.MainViewModel;
+import com.kardabel.mareu.repository.MeetingsRepository;
+import com.kardabel.mareu.ui.add.AddMeetingViewModel;
+import com.kardabel.mareu.ui.details.DetailsActivityViewModel;
+import com.kardabel.mareu.ui.list.MainViewModel;
 
 /**
  * Created by stéphane Warin OCR on 01/04/2021.

@@ -1,4 +1,4 @@
-package com.kardabel.mareu.mareu.ui.list;
+package com.kardabel.mareu.ui.list;
 
 import android.view.LayoutInflater;
 import android.view.View;

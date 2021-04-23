@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#80F4F1F1"
-        tools:context=".mareu.ui.add.AddMeetingActivity">
+        tools:context=".ui.add.AddMeetingActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"

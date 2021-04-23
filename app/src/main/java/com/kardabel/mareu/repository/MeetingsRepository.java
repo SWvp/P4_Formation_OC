@@ -1,13 +1,12 @@
-package com.kardabel.mareu.mareu.repository;
+package com.kardabel.mareu.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 
-import com.kardabel.mareu.mareu.data.FakeDataStore;
-import com.kardabel.mareu.mareu.model.Meeting;
+import com.kardabel.mareu.data.FakeDataStore;
+import com.kardabel.mareu.model.Meeting;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 

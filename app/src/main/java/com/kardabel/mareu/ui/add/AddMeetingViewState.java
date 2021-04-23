@@ -1,6 +1,6 @@
-package com.kardabel.mareu.mareu.ui.add;
+package com.kardabel.mareu.ui.add;
 
-import com.kardabel.mareu.mareu.model.Meeting;
+import com.kardabel.mareu.model.Meeting;
 
 import java.util.List;
 
