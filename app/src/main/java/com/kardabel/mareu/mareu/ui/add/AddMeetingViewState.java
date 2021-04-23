@@ -1,5 +1,7 @@
 package com.kardabel.mareu.mareu.ui.add;
 
+import com.kardabel.mareu.mareu.model.Meeting;
+
 import java.util.List;
 
 public class AddMeetingViewState {
@@ -53,10 +55,22 @@ public class AddMeetingViewState {
         this.date = date;
     }
 
-    public void setAddMeetingHour(String hour) {
-        this.hour = hour;
-    }
+    public void setAddMeetingHour(String hour) { this.hour = hour; }
 
-    public void gsetAddMeetingEmails(List<String> emails) { this.emails = emails; }
+    public void getAddMeetingEmails(List<String> emails) { this.emails = emails; }
+
+    public boolean completeReunion(AddMeetingViewState meeting)
+    {
+        if (meetingName != null && hour != null && date !=null && roomName!= null && emails!= null)
+        {
+            return true;
+
+        }
+        else
+        {
+            return false;
+
+        }
+    }
 
 }

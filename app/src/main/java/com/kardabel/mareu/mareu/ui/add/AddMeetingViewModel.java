@@ -33,6 +33,14 @@ public class AddMeetingViewModel extends ViewModel {
         mMeetingsRepository = meetingsRepository;
     }
 
+
+    public void addMeetingName(String meetingName) {
+        addMeetingViewState.setAddMeetingName(meetingName);
+    }
+
+    public void addRoomName(String roomName) {
+    }
+
     public void onTimeSetAddMeetingViewModel(TimePicker view, int hourOfDay, int minute, EditText editText) {
         editText.setText(hourOfDay + "h" + minute);
         if(minute < 10 && hourOfDay < 10){
@@ -63,19 +71,8 @@ public class AddMeetingViewModel extends ViewModel {
             dateEditText.setText("0" + dayOfMonth + "-" + month + "-" + year);
 
         }
-    }
+        String date = dateEditText.getText().toString();
 
-    public void addMeetingName(String meetingName) {
-        addMeetingViewState.setAddMeetingDate(meetingName);
-    }
-
-    public void addRoomName(String roomName) {
-    }
-
-    public void addMeetingDate(String date) {
-    }
-
-    public void addMeetingHour(String hour) {
     }
 
     public void addEmails(String email) {
@@ -84,9 +81,12 @@ public class AddMeetingViewModel extends ViewModel {
     }
 
     public void insertMeeting(){
-        if(meeting.completeReunion(meeting)){
+        if(addMeetingViewState.completeReunion(addMeetingViewState)){
         mMeetingsRepository.insertMeeting(meeting);
 
+        }
+        else{
+            //send a toast to viewstate
         }
     }
 

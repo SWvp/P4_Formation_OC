@@ -33,10 +33,10 @@ public class DetailsActivityViewModel extends ViewModel {
         this.meetingId = meetingId;
     }
 
-    private DetailsActivityViewState map(List<Meeting> meetingList){
+    private DetailsActivityViewState map(List<Meeting> meetings){
         DetailsActivityViewState result = null;
 
-        for (Meeting meeting: meetingList) {
+        for (Meeting meeting: meetings) {
             if (meetingId == meeting.getMeetingId()) {
                 String humanReadableHour = meeting.getMeetingHour();
 
