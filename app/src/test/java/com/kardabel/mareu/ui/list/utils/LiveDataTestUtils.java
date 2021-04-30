@@ -1,4 +1,4 @@
-package com.kardabel.mareu.ui.list;
+package com.kardabel.mareu.ui.list.utils;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;

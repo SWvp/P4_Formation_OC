@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.kardabel.mareu.repository.MeetingsRepository;
 import com.kardabel.mareu.ui.add.AddMeetingViewModel;
-import com.kardabel.mareu.ui.details.DetailsActivityViewModel;
+import com.kardabel.mareu.ui.details.DetailsViewModel;
 import com.kardabel.mareu.ui.list.MainViewModel;
 
 /**
@@ -36,8 +36,8 @@ public class MareuViewModelFactory implements ViewModelProvider.Factory {
           return (T) new MainViewModel(new MeetingsRepository());
 
       }
-      else if(modelClass.isAssignableFrom(DetailsActivityViewModel.class)){
-          return (T) new DetailsActivityViewModel(new MeetingsRepository());
+      else if(modelClass.isAssignableFrom(DetailsViewModel.class)){
+          return (T) new DetailsViewModel(new MeetingsRepository());
 
       }
       else if(modelClass.isAssignableFrom(AddMeetingViewModel.class)){

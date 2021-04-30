@@ -16,13 +16,24 @@ import java.time.LocalTime;
  */
 public class TimePickerFragment extends DialogFragment {
 
+    public static final int FLAG_START_TIME = 0;
+    public static final int FLAG_END_TIME = 1;
+
+    private int flag = 0;
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         LocalTime time = LocalTime.now();
+
         int hour = time.getHour();
         int minute = time.getMinute();
 
         return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(), hour, minute, DateFormat.is24HourFormat(getActivity()));
+
+    }
+    public void setFlag(int i) {
+        flag = i;
     }
 }

@@ -14,6 +14,7 @@ import com.kardabel.mareu.model.Meeting;
 import com.kardabel.mareu.model.Room;
 import com.kardabel.mareu.repository.MeetingsRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class MainViewModel extends ViewModel {
     private final MediatorLiveData<List<MainViewState>> meetingsListMediatorLiveData = new MediatorLiveData<>();
 
     private final MutableLiveData<Room> roomFilterMutableLiveData = new MutableLiveData<>();
-    private final MutableLiveData<String> dateFilterMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<LocalDate> dateFilterMutableLiveData = new MutableLiveData<>();
 
-    //Observers Triggers
+    //Observers
     public MainViewModel(@NonNull MeetingsRepository meetingsRepository) {
         mMeetingsRepository = meetingsRepository;
 
@@ -48,18 +49,18 @@ public class MainViewModel extends ViewModel {
             }
         });
 
-        meetingsListMediatorLiveData.addSource(dateFilterMutableLiveData, new Observer<String>() {
+        meetingsListMediatorLiveData.addSource(dateFilterMutableLiveData, new Observer<LocalDate>() {
             @Override
-            public void onChanged(String Date) {
+            public void onChanged(LocalDate Date) {
                 combine(meetingsListLiveData.getValue(), roomFilterMutableLiveData.getValue(), Date);
 
             }
         });
     }
 
-    //Filter the LiveData
-    private void combine(@Nullable List<Meeting> meetings, @Nullable Room room, @Nullable String date) {
-        List<Meeting> meetingsToAdd = new ArrayList<>();
+    //Filter the Mediator
+    private void combine(@Nullable List<Meeting> meetings, @Nullable Room room, @Nullable LocalDate date) {
+        List<Meeting> filteredMeetings = new ArrayList<>();
         if((room == null) && (date == null)){
             meetingsListMediatorLiveData.setValue(map(meetings));
 
@@ -67,10 +68,10 @@ public class MainViewModel extends ViewModel {
         else{
             for (Meeting meeting : meetings) {
                 if(meeting.getRoomName().equals(room) || meeting.getMeetingDate().equals(date)){
-                    meetingsToAdd.add(meeting);
+                    filteredMeetings.add(meeting);
 
                 }
-                meetingsListMediatorLiveData.setValue(map(meetingsToAdd));
+                meetingsListMediatorLiveData.setValue(map(filteredMeetings));
 
             }
         }
@@ -81,14 +82,14 @@ public class MainViewModel extends ViewModel {
         List<MainViewState> result = new ArrayList<>();
 
         for (Meeting meeting: meetings) {
-            String humanReadableHour = meeting.getMeetingHour().toString();
+            String humanReadableHour = meeting.getMeetingStart().toString();
             String humanReadableDate = meeting.getMeetingDate().toString();
             String humanReadableEmails = readableEmails(meeting);
 
             result.add(new MainViewState(
                     meeting.getMeetingId(),
                     humanReadableDate,
-                    meeting.getMeetingName() + " - " + humanReadableHour + " - " + meeting.getRoomName().getRoomMeetingName(),
+                    meeting.getMeetingName() + " - " + humanReadableHour + " - " + humanReadableDate + " - " + meeting.getRoomName().getRoomMeetingName(),
                     meeting.getRoomName().getRoomMeetingName(),
                     meeting.getRoomAvatar().getDrawableRoomIcon(),
                     humanReadableEmails
@@ -117,41 +118,16 @@ public class MainViewModel extends ViewModel {
     }
 
     public void roomFilterValue(Room room){
-        if(dateFilterMutableLiveData.getValue() != null){
-            dateFilterMutableLiveData.setValue(null);
-
-        }
         roomFilterMutableLiveData.setValue(room);
     }
 
-    public void onDateSetMainViewModel(DatePicker view, int year, int month, int dayOfMonth) {
-
-        int intYearValue = year;
-        int intMonthValue = month;
-        int intDayValue = dayOfMonth;
-
-        String stringYearValue = String.valueOf(intYearValue);
-        String stringMonthValue = String.valueOf(intMonthValue);
-        String stringDayValue = String.valueOf(intDayValue);
-
-        if(dayOfMonth < 10){
-            stringDayValue = "0" + stringDayValue;
-
-        }
-        else if (month < 10){
-            stringMonthValue = "0" + stringMonthValue;
-
-        }
-        String date = (stringDayValue + "-" + stringMonthValue + "-" + stringYearValue);
+    public void onDateFilterSetMainViewModel(DatePicker view, int year, int month, int dayOfMonth) {
+        LocalDate date = LocalDate.of(year, month, dayOfMonth);
         dateFilterValue(date);
 
     }
 
-    public void dateFilterValue(String date){
-        if(roomFilterMutableLiveData != null){
-            roomFilterMutableLiveData.setValue(null);
-
-        }
+    public void dateFilterValue(LocalDate date){
         dateFilterMutableLiveData.setValue(date);
 
     }
@@ -159,6 +135,7 @@ public class MainViewModel extends ViewModel {
     public void resetFilter(Boolean reset){
         dateFilterMutableLiveData.setValue(null);
         roomFilterMutableLiveData.setValue(null);
+
     }
 
     public void deleteMeeting(int meetingId){

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,7 +34,6 @@
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                app:menu="@menu/add_meeting_top_app_bar"
                 app:title="Add Meeting"
                 app:titleTextColor="@color/white">
 
@@ -65,7 +65,6 @@
             app:startIconDrawable="@drawable/ic_baseline_drive_file_rename_outline_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/add_meeting_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -74,7 +73,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dropdown_menu"
+            android:id="@+id/room_dropdown_menu"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,6 +95,7 @@
                 android:id="@+id/dropdown_autocomplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="none"
                 android:backgroundTint="#FFFFFF">
 
             </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
@@ -107,44 +107,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:clickable="false"
+            android:cursorVisible="false"
             android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:hint="Enter Date"
+            android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dropdown_menu" />
+            app:layout_constraintTop_toBottomOf="@+id/room_dropdown_menu" />
 
-        <Button
-            android:id="@+id/date_choose_button"
-            android:layout_width="212dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="32dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dropdown_menu" />
+
 
 
         <EditText
-            android:id="@+id/time_setter"
+            android:id="@+id/start_time_setter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:layout_marginStart="16dp"
+            android:clickable="false"
+            android:cursorVisible="false"
             android:ems="10"
-            android:hint="Enter Time"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="12dp"
+            android:hint="Start"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_setter" />
 
-
-        <Button
-            android:id="@+id/time_choose_button"
-            android:layout_width="212dp"
-            android:layout_height="45dp"
+        <EditText
+            android:id="@+id/end_time_setter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:background="@android:color/transparent"
+            android:layout_marginEnd="16dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="End"
+            android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_setter" />
+
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_input"
@@ -160,10 +170,11 @@
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_setter"
+            app:layout_constraintTop_toBottomOf="@+id/start_time_setter"
             app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
@@ -178,7 +189,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="256dp"
-            android:text="Add mail"
+            android:layout_marginTop="0dp"
+            android:text="Add email"
+            android:textSize="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email_input">
@@ -186,22 +199,30 @@
         </Button>
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/add_meeting_chipGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_mail_button"
+            app:singleSelection="true"/>
+
+
+        <Button
+            android:id="@+id/create"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:singleSelection="true"
-            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:enabled="true"
+            android:text="Save"
+            app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_mail_button">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip4"
-                android:text="example@mails.com"
-                style="@style/Widget.MaterialComponents.Chip.Action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.chip.ChipGroup>
+            app:layout_constraintTop_toBottomOf="@+id/add_meeting_chipGroup" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

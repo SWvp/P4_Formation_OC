@@ -8,7 +8,7 @@ import com.kardabel.mareu.R;
  * Created by stéphane Warin OCR on 12/04/2021.
  */
 public enum Room {
-    ROOM_RESET(R.drawable.peach, "Reset"),
+    ROOM_RESET(R.drawable.blank, "Reset"),
     ROOM_PEACH(R.drawable.peach, "Peach"),
     ROOM_MARIO(R.drawable.mario, "Mario"),
     ROOM_LUIGI(R.drawable.luigi, "Luigi"),
@@ -26,7 +26,7 @@ public enum Room {
 
     Room(int roomIcon, String roomName) {
         this.roomIcon = roomIcon;
-        this.roomName =roomName;
+        this.roomName = roomName;
 
     }
 
@@ -35,5 +35,18 @@ public enum Room {
     }
 
     public String getRoomMeetingName(){ return roomName; }
+
+    public static Room contains(String addRoomName) {
+        Room room2 = ROOM_RESET;
+
+        for (Room room : Room.values()) {
+            if (room.roomName.equals(addRoomName)) {
+                room2 = room;
+            }
+        }
+        return room2;
+    }
+
+
 
 }

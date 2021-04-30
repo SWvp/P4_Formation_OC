@@ -1,67 +1,87 @@
 package com.kardabel.mareu.ui.add;
 
+import com.kardabel.mareu.model.Email;
 import com.kardabel.mareu.model.Meeting;
+import com.kardabel.mareu.model.Room;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class AddMeetingViewState {
 
-    private  int meetingId;
     private  String meetingName;
-    private  String roomName;
-    private  String date;
-    private  String hour;
-    private  List<String> emails;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private LocalDate date;
+    private Room roomName;
+    private Room avatar;
+    private  List<Email> emails;
 
-    public AddMeetingViewState(int meetingId, String meetingName, String roomName, String date, String hour, List<String> emails) {
-        this.meetingId = meetingId;
+    public AddMeetingViewState(String meetingName, LocalTime startTime, LocalTime endTime, LocalDate date, Room roomName, Room avatar, List<Email> emails) {
         this.meetingName = meetingName;
-        this.roomName = roomName;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.date = date;
-        this.hour = hour;
+        this.roomName = roomName;
+        this.avatar = avatar;
         this.emails = emails;
     }
 
+    //GETTERS
     public String getAddMeetingName() {
         return meetingName;
     }
 
-    public String getAddMeetingRoomName() {
+    public LocalTime getAddMeetingStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getAddMeetingEndTime() {
+        return endTime;
+    }
+
+    public LocalDate getAddMeetingDate() { return date; }
+
+    public Room getAddMeetingRoomName() {
         return roomName;
     }
 
-    public String getAddMeetingDate() {
-        return date;
+    public Room getAddMeetingAvatar() {
+        return avatar;
     }
 
-    public String getAddMeetingHour() {
-        return hour;
-    }
-
-    public List<String> getAddMeetingEmails() {
+    public List<Email> getAddMeetingEmails() {
         return emails;
     }
 
 
-    public void setMeetingId(int meetingId) { this.meetingId = meetingId; }
-
+    //SETTERS
     public void setAddMeetingName(String meetingName) { this.meetingName = meetingName; }
 
-    public void setAddMeetingRoomName(String roomName) {
-        this.roomName = roomName;
-    }
+    public void setAddMeetingStartTime(LocalTime startTime) { this.startTime = startTime; }
 
-    public void setAddMeetingDate(String date) {
+    public void setAddMeetingEndTime(LocalTime endTime) { this.endTime = endTime; }
+
+    public void setAddMeetingDate(LocalDate date) {
         this.date = date;
     }
 
-    public void setAddMeetingHour(String hour) { this.hour = hour; }
+    public void setAddMeetingRoomName(Room roomName) {
+        this.roomName = roomName;
+    }
 
-    public void getAddMeetingEmails(List<String> emails) { this.emails = emails; }
+    public void setAddMeetingAvatar(Room avatar) {
+        this.avatar = avatar;
+    }
 
+    public void setAddMeetingEmails(List<Email> emails) { this.emails = emails; }
+
+
+    //CHECK MEETING
     public boolean completeReunion(AddMeetingViewState meeting)
     {
-        if (meetingName != null && hour != null && date !=null && roomName!= null && emails!= null)
+        if (meetingName != null && startTime != null && endTime != null && date !=null && roomName!= null && emails!= null)
         {
             return true;
 

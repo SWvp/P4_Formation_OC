@@ -1,6 +1,8 @@
 package com.kardabel.mareu.model;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,16 +13,18 @@ import java.util.Objects;
 public class Meeting {
     private int meetingId;
     private String meetingName;
-    private String hour;
-    private String date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private LocalDate date;
     private Room roomName;
     private Room roomAvatar;
     private List<Email> mailingList;
 
-    public Meeting(int meetingId, String meetingName, Room avatar, String hour, String date, Room roomName, List<Email> mailingList) {
+    public Meeting(int meetingId, String meetingName, Room avatar, LocalTime startTime, LocalTime endTime, LocalDate date, Room roomName, List<Email> mailingList) {
         this.meetingId = meetingId;
         this.meetingName = meetingName;
-        this.hour = hour;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.date = date;
         this.roomName = roomName;
         this.roomAvatar = avatar;
@@ -35,17 +39,19 @@ public class Meeting {
         return meetingName;
     }
 
-    public String getMeetingHour() {
-        return hour;
+    public LocalTime getMeetingStart() {
+        return startTime;
     }
 
-    public String getMeetingDate() {
+    public LocalTime getMeetingEnd() {
+        return endTime;
+    }
+
+    public LocalDate getMeetingDate() {
         return date;
     }
 
-    public Room getRoomName() {
-        return roomName;
-    }
+    public Room getRoomName() { return roomName; }
 
     public Room getRoomAvatar() {
         return roomAvatar;
@@ -57,6 +63,7 @@ public class Meeting {
 
         for (Email email : mailingList) {
             emailsString.add(email.getUrl());
+
         }
 
         return emailsString;
@@ -69,7 +76,8 @@ public class Meeting {
         Meeting meeting = (Meeting) o;
         return meetingId == meeting.meetingId &&
             Objects.equals(meetingName, meeting.meetingName) &&
-            Objects.equals(hour, meeting.hour) &&
+            Objects.equals(startTime, meeting.startTime) &&
+            Objects.equals(endTime, meeting.endTime) &&
             Objects.equals(date, meeting.date) &&
             roomName == meeting.roomName &&
             roomAvatar == meeting.roomAvatar &&
@@ -78,7 +86,7 @@ public class Meeting {
 
     @Override
     public int hashCode() {
-        return Objects.hash(meetingId, meetingName, hour, date, roomName, roomAvatar, mailingList);
+        return Objects.hash(meetingId, meetingName, startTime, endTime, date, roomName, roomAvatar, mailingList);
     }
 
     @Override
@@ -86,7 +94,8 @@ public class Meeting {
         return "Meeting{" +
             "meetingId=" + meetingId +
             ", meetingName='" + meetingName + '\'' +
-            ", hour='" + hour + '\'' +
+            ", startTime='" + startTime + '\'' +
+            ", endTime='" + endTime + '\'' +
             ", date='" + date + '\'' +
             ", roomName=" + roomName +
             ", roomAvatar=" + roomAvatar +

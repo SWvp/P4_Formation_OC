@@ -2,20 +2,20 @@ package com.kardabel.mareu.model;
 
 public class Email {
 
-    private final String name;
 
-    private final String url;
 
-    public Email(String name, String url) {
-        this.name = name;
+    private String url;
+
+    public Email(String url) {
+
         this.url = url;
     }
 
-    public String getName() {
-        return name;
-    }
+
 
     public String getUrl() {
         return url;
     }
+
+    public void setUrl(String url){this.url = url;}
 }

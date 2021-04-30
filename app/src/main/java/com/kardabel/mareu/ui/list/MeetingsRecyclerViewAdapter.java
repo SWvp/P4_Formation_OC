@@ -38,6 +38,8 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
     public void onBindViewHolder(@NonNull MeetingsRecyclerViewAdapter.ViewHolder holder, int position) {
         MainViewState meeting = meetings.get(position);
 
+
+
         holder.meetingDetails.setText(meeting.getMeetingDetailsToDisplay());
         holder.mailingList.setText(meeting.getMailingListToDisplay());
         Glide.with(holder.roomAvatar.getContext())

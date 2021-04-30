@@ -19,9 +19,12 @@ public class DatePickerFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         LocalDate date = LocalDate.now();
+
         int year = date.getYear();
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();
+
         return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
+
     }
 }

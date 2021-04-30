@@ -3,6 +3,7 @@ package com.kardabel.mareu.ui.list;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     //When time filter picked
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        mMainViewModel.onDateSetMainViewModel(view, year, month, dayOfMonth);
+        mMainViewModel.onDateFilterSetMainViewModel(view, year, month, dayOfMonth);
 
     }
 }

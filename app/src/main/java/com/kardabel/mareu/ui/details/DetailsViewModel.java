@@ -11,17 +11,20 @@ import com.kardabel.mareu.repository.MeetingsRepository;
 
 import java.util.List;
 
-public class DetailsActivityViewModel extends ViewModel {
+public class DetailsViewModel extends ViewModel {
     private MeetingsRepository mMeetingsRepository;
-    private LiveData<DetailsActivityViewState> meetingsDetailsLiveData;
+
+    private LiveData<DetailsViewState> meetingsDetailsLiveData;
 
     private int meetingId = -1;
 
-    public DetailsActivityViewModel(@NonNull MeetingsRepository meetingsRepository) {
+    private DetailsViewState result;
+
+    public DetailsViewModel(@NonNull MeetingsRepository meetingsRepository) {
         mMeetingsRepository = meetingsRepository;
-        meetingsDetailsLiveData = Transformations.map(mMeetingsRepository.getMeetingsList(), new Function<List<Meeting>, DetailsActivityViewState>() {
+        meetingsDetailsLiveData = Transformations.map(mMeetingsRepository.getMeetingsList(), new Function<List<Meeting>, DetailsViewState>() {
             @Override
-            public DetailsActivityViewState apply(List<Meeting> meeting) {
+            public DetailsViewState apply(List<Meeting> meeting) {
                 return map(meeting);
 
             }
@@ -32,18 +35,19 @@ public class DetailsActivityViewModel extends ViewModel {
         this.meetingId = meetingId;
     }
 
-    private DetailsActivityViewState map(List<Meeting> meetings){
-        DetailsActivityViewState result = null;
-
+    private DetailsViewState map(List<Meeting> meetings){
         for (Meeting meeting: meetings) {
+            String humanReadableStartTime = meeting.getMeetingStart().toString();
+            String humanReadableEndTime = meeting.getMeetingEnd().toString();
+            String humanReadableDate = meeting.getMeetingDate().toString();
             if (meetingId == meeting.getMeetingId()) {
-                String humanReadableHour = meeting.getMeetingHour();
 
-                result = new DetailsActivityViewState(
+                result = new DetailsViewState(
                         meeting.getMeetingId(),
                         meeting.getMeetingName(),
-                        meeting.getMeetingHour(),
-                        meeting.getMeetingDate(),
+                        humanReadableStartTime + " to " + humanReadableEndTime,
+                        humanReadableEndTime,
+                        humanReadableDate,
                         meeting.getRoomName().getRoomMeetingName(),
                         meeting.getRoomAvatar().getDrawableRoomIcon(),
                         meeting.getMailingList()
@@ -55,5 +59,6 @@ public class DetailsActivityViewModel extends ViewModel {
 
     }
 
-    public LiveData<DetailsActivityViewState> getDetailsLiveData(){ return meetingsDetailsLiveData; }
+    public LiveData<DetailsViewState> getDetailsLiveData(){ return meetingsDetailsLiveData; }
+
 }
