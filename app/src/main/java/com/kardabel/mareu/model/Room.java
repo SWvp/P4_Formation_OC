@@ -4,9 +4,7 @@ import androidx.annotation.DrawableRes;
 
 import com.kardabel.mareu.R;
 
-/**
- * Created by stéphane Warin OCR on 12/04/2021.
- */
+
 public enum Room {
     ROOM_RESET(R.drawable.blank, "Reset"),
     ROOM_PEACH(R.drawable.peach, "Peach"),
@@ -45,8 +43,6 @@ public enum Room {
             }
         }
         return room2;
+
     }
-
-
-
 }

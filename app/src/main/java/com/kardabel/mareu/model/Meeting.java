@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created by stéphane Warin OCR on 25/03/2021.
- */
+
 public class Meeting {
     private int meetingId;
     private String meetingName;
@@ -29,6 +27,7 @@ public class Meeting {
         this.roomName = roomName;
         this.roomAvatar = avatar;
         this.mailingList = mailingList;
+
     }
 
     public int getMeetingId() {
@@ -47,9 +46,7 @@ public class Meeting {
         return endTime;
     }
 
-    public LocalDate getMeetingDate() {
-        return date;
-    }
+    public LocalDate getMeetingDate() { return date; }
 
     public Room getRoomName() { return roomName; }
 
@@ -58,7 +55,6 @@ public class Meeting {
     }
 
     public List<String> getMailingList() {
-
         List<String> emailsString = new ArrayList<>();
 
         for (Email email : mailingList) {
@@ -67,6 +63,7 @@ public class Meeting {
         }
 
         return emailsString;
+
     }
 
     @Override
@@ -82,11 +79,13 @@ public class Meeting {
             roomName == meeting.roomName &&
             roomAvatar == meeting.roomAvatar &&
             Objects.equals(mailingList, meeting.mailingList);
+
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(meetingId, meetingName, startTime, endTime, date, roomName, roomAvatar, mailingList);
+
     }
 
     @Override
@@ -101,6 +100,7 @@ public class Meeting {
             ", roomAvatar=" + roomAvatar +
             ", mailingList=" + mailingList +
             '}';
+
     }
 }
 

@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 
 public class MainViewModelTest {
@@ -38,7 +39,6 @@ public class MainViewModelTest {
     @Before
     public void setUp() {
         Mockito.doReturn(meetingsMutableLiveData).when(mMeetingsRepository).getMeetingsList();
-
         mMainViewModel = new MainViewModel(mMeetingsRepository);
     }
 
@@ -91,19 +91,9 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(1, result.size());
-    }
+        MainViewState firstResult = result.get(0);
+        assertEquals(new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - 2021-05-12 - Mario", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"), firstResult);
 
-    @Test
-    public void given_room_filter_is_mario_should_contains_mario_avatar() throws InterruptedException {
-        // Given
-        meetingsMutableLiveData.setValue(getDefaultMeetings());
-
-        // When
-        mMainViewModel.roomFilterValue(Room.ROOM_MARIO);
-        List<MainViewState> result = LiveDataTestUtils.getOrAwaitValue(mMainViewModel.getMeetingsListLiveData());
-
-        // Then
-        assertEquals(true, result.contains(R.drawable.mario));
     }
 
     @Test
@@ -191,7 +181,7 @@ public class MainViewModelTest {
 
         // When
         mMainViewModel.dateFilterValue(LocalDate.of(2021, 05, 12));
-        mMainViewModel.resetFilter(true);
+        mMainViewModel.resetFilter();
         List<MainViewState> result = LiveDataTestUtils.getOrAwaitValue(mMainViewModel.getMeetingsListLiveData());
 
         // Then
@@ -214,19 +204,19 @@ public class MainViewModelTest {
     // IN
     private List<Meeting> getDefaultMeetings() {
         return Arrays.asList(
-                new Meeting(0, "Reuninon A", Room.ROOM_MARIO, LocalTime.of(15, 10), LocalTime.of(16, 50), LocalDate.of(2021, 05, 12), Room.ROOM_MARIO, Arrays.asList(
+                new Meeting(0, "Reunion A", Room.ROOM_MARIO, LocalTime.of(15, 10), LocalTime.of(16, 50), LocalDate.of(2021, 05, 12), Room.ROOM_MARIO, Arrays.asList(
                         new Email("stephane@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(1, "Reuninon B", Room.ROOM_PEACH, LocalTime.of(9, 00), LocalTime.of(11, 8), LocalDate.of(2021, 11, 02), Room.ROOM_PEACH, Arrays.asList(
+                new Meeting(1, "Reunion B", Room.ROOM_PEACH, LocalTime.of(9, 00), LocalTime.of(11, 8), LocalDate.of(2021, 11, 02), Room.ROOM_PEACH, Arrays.asList(
                         new Email("warin@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(2, "Reuninon c", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(12, 35), LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
+                new Meeting(2, "Reunion c", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(12, 35), LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
                         new Email("philibert@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(3, "Reuninon D", Room.ROOM_BOO, LocalTime.of(16, 50), LocalTime.of(17, 58), LocalDate.of(2021, 10, 02), Room.ROOM_BOO, Arrays.asList(
+                new Meeting(3, "Reunion D", Room.ROOM_BOO, LocalTime.of(16, 50), LocalTime.of(17, 58), LocalDate.of(2021, 10, 02), Room.ROOM_BOO, Arrays.asList(
                         new Email("krabulbe@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 ))
@@ -235,15 +225,15 @@ public class MainViewModelTest {
 
     private List<Meeting> getThreeMeetings() {
         return Arrays.asList(
-                new Meeting(0, "Reuninon A", Room.ROOM_MARIO, LocalTime.of(15, 10), LocalTime.of(16, 50), LocalDate.of(2021, 05, 12), Room.ROOM_MARIO, Arrays.asList(
+                new Meeting(0, "Reunion A", Room.ROOM_MARIO, LocalTime.of(15, 10), LocalTime.of(16, 50), LocalDate.of(2021, 05, 12), Room.ROOM_MARIO, Arrays.asList(
                         new Email("stephane@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(1, "Reuninon B", Room.ROOM_PEACH, LocalTime.of(9, 00), LocalTime.of(11, 8), LocalDate.of(2021, 05, 12), Room.ROOM_PEACH, Arrays.asList(
+                new Meeting(1, "Reunion B", Room.ROOM_PEACH, LocalTime.of(9, 00), LocalTime.of(11, 8), LocalDate.of(2021, 05, 12), Room.ROOM_PEACH, Arrays.asList(
                         new Email("warin@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(2, "Reuninon c", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(17, 58), LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
+                new Meeting(2, "Reunion c", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(17, 58), LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
                         new Email("philibert@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 ))
@@ -253,13 +243,13 @@ public class MainViewModelTest {
     // OUT
     private List<MainViewState> getDefaultMainViewState() {
         return  Arrays.asList(
-                new MainViewState(0, "15:10", "Reuninon A", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - 2021-05-12 - Mario", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(1, "09:00", "Reuninon B", "Peach", R.drawable.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(1, "2021-11-02", "Reunion B - 09:00 - 2021-11-02 - Peach", "Peach", R.drawable.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(2, "11:08", "Reuninon C", "Goomba", R.drawable.goomba, "philibert@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(2, "2021-06-15", "Reunion C - 11:08 - 2021-06-15 - Goomba", "Goomba", R.drawable.goomba, "philibert@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(3, "16:50", "Reuninon D", "Boo", R.drawable.boo, "krabulbe@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(3, "2021-10-02", "Reunion D - 16:50 - 2021-10-02 - Boo", "Boo", R.drawable.boo, "krabulbe@monmail.fr - peteretsteven@monmail.fr"
                 )
 
         );
@@ -267,7 +257,7 @@ public class MainViewModelTest {
 
     private List<MainViewState> getPeach() {
         return  Arrays.asList(
-                new MainViewState(1, "09:00", "Reuninon B", "Peach", R.drawable.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(1, "2021-11-02", "Reunion B - 09:00 - 2021-11-02 - Peach", "Peach", R.drawable.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
                 )
 
         );

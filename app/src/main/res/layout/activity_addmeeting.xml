@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#80F4F1F1"
+    android:backgroundTint="#FFFFFF"
     tools:layout_editor_absoluteX="1dp"
     tools:layout_editor_absoluteY="1dp">
 
@@ -57,7 +57,7 @@
             app:counterEnabled="true"
             app:counterMaxLength="10"
             app:endIconMode="clear_text"
-            app:helperText="Enter meeting name please"
+            app:helperText="Enter meeting name"
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
             app:boxBackgroundColor="@color/white"
             app:boxBackgroundMode="outline"
             app:endIconMode="dropdown_menu"
-            app:helperText="Choose your room"
+            app:helperText="Choose a room"
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,8 +95,8 @@
                 android:id="@+id/dropdown_autocomplete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-                android:backgroundTint="#FFFFFF">
+                android:backgroundTint="#FFFFFF"
+                android:inputType="none">
 
             </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
 
@@ -119,21 +119,19 @@
             app:layout_constraintTop_toBottomOf="@+id/room_dropdown_menu" />
 
 
-
-
         <EditText
             android:id="@+id/start_time_setter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:clickable="false"
             android:cursorVisible="false"
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:hint="Choose start time"
             android:textSize="12dp"
-            android:hint="Start"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_setter" />
 
@@ -148,12 +146,10 @@
             android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:hint="End"
+            android:hint="Choose end time"
             android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_setter" />
-
-
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -166,7 +162,7 @@
             android:layout_marginEnd="16dp"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
-            app:helperText="Enter participants mail"
+            app:helperText="Enter participants email"
             app:helperTextEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -190,6 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="256dp"
             android:layout_marginTop="0dp"
+            android:outlineAmbientShadowColor="@color/black"
             android:text="Add email"
             android:textSize="8dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -206,7 +203,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_mail_button"
-            app:singleSelection="true"/>
+            app:singleSelection="true" />
 
 
         <Button

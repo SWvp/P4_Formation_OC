@@ -2,14 +2,11 @@ package com.kardabel.mareu.ui.add;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.ClipData;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,8 +17,6 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
@@ -29,16 +24,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.kardabel.mareu.R;
 import com.kardabel.mareu.di.MareuViewModelFactory;
-import com.kardabel.mareu.model.Email;
 import com.kardabel.mareu.ui.DatePickerFragment;
 import com.kardabel.mareu.ui.TimePickerFragment;
 
-import static com.kardabel.mareu.ui.TimePickerFragment.FLAG_END_TIME;
-import static com.kardabel.mareu.ui.TimePickerFragment.FLAG_START_TIME;
 
 public class AddMeetingActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
@@ -127,7 +118,6 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
 
         Button save = findViewById(R.id.create);
         save.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 saveMeeting();
@@ -167,7 +157,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         EditText dateEditText = findViewById(R.id.date_setter);
-        addMeetingViewModel.onDateSetAddMeetingViewModel(view, year, month, dayOfMonth, dateEditText);
+        addMeetingViewModel.onDateSetAddMeetingViewModel(view, year, month+1, dayOfMonth, dateEditText);
     }
 
     //with flag, we know witch edittext to update and compare

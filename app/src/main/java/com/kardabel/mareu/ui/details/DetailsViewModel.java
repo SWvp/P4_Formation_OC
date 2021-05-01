@@ -11,14 +11,15 @@ import com.kardabel.mareu.repository.MeetingsRepository;
 
 import java.util.List;
 
+
 public class DetailsViewModel extends ViewModel {
+    private int meetingId = -1;
+
     private MeetingsRepository mMeetingsRepository;
+    private DetailsViewState result;
 
     private LiveData<DetailsViewState> meetingsDetailsLiveData;
 
-    private int meetingId = -1;
-
-    private DetailsViewState result;
 
     public DetailsViewModel(@NonNull MeetingsRepository meetingsRepository) {
         mMeetingsRepository = meetingsRepository;
@@ -40,13 +41,13 @@ public class DetailsViewModel extends ViewModel {
             String humanReadableStartTime = meeting.getMeetingStart().toString();
             String humanReadableEndTime = meeting.getMeetingEnd().toString();
             String humanReadableDate = meeting.getMeetingDate().toString();
+
             if (meetingId == meeting.getMeetingId()) {
 
                 result = new DetailsViewState(
                         meeting.getMeetingId(),
                         meeting.getMeetingName(),
                         humanReadableStartTime + " to " + humanReadableEndTime,
-                        humanReadableEndTime,
                         humanReadableDate,
                         meeting.getRoomName().getRoomMeetingName(),
                         meeting.getRoomAvatar().getDrawableRoomIcon(),

@@ -19,12 +19,9 @@ import com.kardabel.mareu.di.MareuViewModelFactory;
 import com.kardabel.mareu.ui.details.DetailsViewModel;
 import com.kardabel.mareu.ui.details.DetailsViewState;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by stéphane Warin OCR on 26/03/2021.
- */
+
 public class DetailsActivity extends AppCompatActivity {
 
     public static final String EXTRA_MEETINGID = "EXTRA_MEETINGID";
@@ -32,10 +29,14 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView meetingName;
     private TextView startAndEndTime;
     private TextView date;
-    private ImageView meetingAvatar;
     private TextView roomMeetingName;
+
+    private ImageView meetingAvatar;
+
     private ImageButton backButton;
+
     private ChipGroup chipGroup;
+
     private DetailsViewModel mDetailsViewModel;
 
     @Override
@@ -62,7 +63,7 @@ public class DetailsActivity extends AppCompatActivity {
         mDetailsViewModel.getDetailsLiveData().observe(this, new Observer<DetailsViewState>() {
             @Override
             public void onChanged(DetailsViewState meeting) {
-                List<String> emails = new ArrayList<>();
+                List<String> emails;
                 meetingName.setText(meeting.getDetailsMeetingName());
                 startAndEndTime.setText(meeting.getDetailsStartTime());
                 date.setText(meeting.getDetailsDate());
@@ -76,6 +77,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        // Back to main activity
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

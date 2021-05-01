@@ -3,7 +3,6 @@ package com.kardabel.mareu.repository;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-
 import com.kardabel.mareu.data.FakeDataStore;
 import com.kardabel.mareu.model.Meeting;
 import com.kardabel.mareu.model.Room;
@@ -18,23 +17,25 @@ public class MeetingsRepository {
 
     private List<Meeting> nMeetings = FakeDataStore.generateMeetingList();
 
+    private List<Meeting> nMeetingsInitial = FakeDataStore.generateMeetingList();
+
     private final MutableLiveData<List<Meeting>> mutableMeetingList = new MutableLiveData<>(nMeetings);
 
     public void addNewMeeting(Meeting meeting){
         nMeetings.add(meeting);
-        refreshMutableMeetingList(nMeetings);
+        mutableMeetingList.setValue(nMeetings);
 
     }
 
     public void deleteMeeting(int meetingId){
         for (Iterator<Meeting> iterator = nMeetings.iterator(); iterator.hasNext();){
             Meeting meeting = iterator.next();
-            if(meeting.getMeetingId()==meetingId){
+            if(meeting.getMeetingId() == meetingId){
                 iterator.remove();
 
             }
         }
-        refreshMutableMeetingList(nMeetings);
+        mutableMeetingList.setValue(nMeetings);
 
     }
 
@@ -83,7 +84,12 @@ public class MeetingsRepository {
 
     }
 
-    private void refreshMutableMeetingList(List<Meeting> meeting){ mutableMeetingList.setValue(meeting); }
+    public void resetListForKillScreen(){
+        nMeetings = nMeetingsInitial;
+        mutableMeetingList.setValue(nMeetings);
+
+    }
 
     public LiveData<List<Meeting>> getMeetingsList() { return mutableMeetingList; }
+
 }

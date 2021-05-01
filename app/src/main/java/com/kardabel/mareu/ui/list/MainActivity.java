@@ -3,7 +3,6 @@ package com.kardabel.mareu.ui.list;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -31,9 +29,11 @@ import com.kardabel.mareu.ui.DatePickerFragment;
 
 import java.util.List;
 
+
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener  {
 
     private MainViewModel mMainViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
-        //Delete Button, launch details from recycler items
+        // Launch details
         mAdapter.setOnItemClickListener(new MeetingsRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onMeetingItemClick(MainViewState meeting) {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
             }
 
-            //callback delete button
+            // Delete button
             @Override
             public void onDeleteMeetingClick(int meeting) {
                 mMainViewModel.deleteMeeting(meeting);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         });
     }
 
-    //Topbar overflow for filters dropdown menu
+    // Topbar overflow for filters dropdown menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -99,12 +99,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     }
 
-    //Filters action on viewmodel
+    // Room filters action
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         { case R.id.reset_filter:
-                mMainViewModel.resetFilter(true);
+                mMainViewModel.resetFilter();
                 return true;
             case R.id.date_filter:
                 DialogFragment datePicker = new DatePickerFragment();
@@ -150,10 +150,17 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
-    //When time filter picked
+    // Date filter picked
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        mMainViewModel.onDateFilterSetMainViewModel(view, year, month, dayOfMonth);
+        mMainViewModel.onDateFilterSetMainViewModel(year, month, dayOfMonth);
 
+    }
+
+    // Back to initial list
+    @Override
+    protected void onDestroy() {
+        mMainViewModel.resetList();
+        super.onDestroy();
     }
 }

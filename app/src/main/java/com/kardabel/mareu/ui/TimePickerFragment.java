@@ -21,7 +21,6 @@ public class TimePickerFragment extends DialogFragment {
 
     private int flag = 0;
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

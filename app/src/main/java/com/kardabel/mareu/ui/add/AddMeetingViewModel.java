@@ -1,30 +1,23 @@
 package com.kardabel.mareu.ui.add;
 
-import android.os.Build;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.arch.core.util.Function;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.kardabel.mareu.model.Email;
 import com.kardabel.mareu.model.Meeting;
 import com.kardabel.mareu.model.Room;
 import com.kardabel.mareu.repository.MeetingsRepository;
-import com.kardabel.mareu.ui.details.DetailsViewState;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 public class AddMeetingViewModel extends ViewModel {
 
@@ -67,49 +60,62 @@ public class AddMeetingViewModel extends ViewModel {
     public void onStartTimeSet(TimePicker view, int hourOfDay, int minute, EditText startTime) {
         startTimeAfterEndToast = false;
         mStartTime = LocalTime.of(hourOfDay, minute);
-        if(mStartTime.isBefore(LocalTime.now())){
+
+        if(mStartTime.isAfter(LocalTime.of(17,00))){
+            //toast too late start !!!
             return;
         }
         if(mEndTime != null){
             if(mStartTime.isAfter(mEndTime)){
-                startTimeAfterEndToast = true;
+                //Toast start must be before end
                 return;
 
             }
         }
-        if(startTimeIsOutOfBound(mStartTime)){
-            startTimeOOB = true;
-            return;
+ //     if(startTimeIsOutOfBound(mStartTime)){
+ //         startTimeOOB = true;
+ //         return;
 
-        }
-        else{
+ //     }
+ //     else{
             String humanReadableHour = mStartTime.toString();
             startTime.setText(humanReadableHour);
 
-        }
     }
 
     //when end time is picked
     public void onEndTimeSet(TimePicker view, int hourOfDay, int minute, EditText hourEditText) {
         endTimeBeforeStartToast = false;
         mEndTime = LocalTime.of(hourOfDay, minute);
+
+        if(mEndTime.isAfter(LocalTime.of(18 ,00))){
+            //toast too late end !!
+            return;
+        }
         if(mStartTime != null){
-            if (mEndTime.isBefore(mStartTime)) {
-                endTimeBeforeStartToast = true;
+            if(mEndTime.isBefore(mStartTime)){
+                //Toast end must be after start
                 return;
 
             }
         }
-        if(endTimeIsOutOfBound(mEndTime)){
-            endTimeOOB = true;
-            return;
+ //    if(mStartTime != null){
+ //        if (mEndTime.isBefore(mStartTime)) {
+ //            endTimeBeforeStartToast = true;
+ //            return;
 
-        }
-        else{
+ //        }
+ //    }
+ //    if(endTimeIsOutOfBound(mEndTime)){
+ //        endTimeOOB = true;
+ //        return;
+
+ //    }
+        //else{
             String humanReadableHour = mEndTime.toString();
             hourEditText.setText(humanReadableHour);
 
-        }
+
     }
 
     //When a date is picked
@@ -136,23 +142,23 @@ public class AddMeetingViewModel extends ViewModel {
         else{ return false; }
     }
 
-    //Compare start time selected to time limits
-    private boolean startTimeIsOutOfBound(LocalTime time){
-        if(time.isBefore(LocalTime.of(8, 0))){ return true; }
+// //Compare start time selected to time limits
+// private boolean startTimeIsOutOfBound(LocalTime time){
+//     if(time.isBefore(LocalTime.of(8, 0))){ return true; }
 
-        else if (time.isAfter((LocalTime.of(17,0)))){ return true; }
+//     else if (time.isAfter((LocalTime.of(17,0)))){ return true; }
 
-        else{ return false; }
+//     else{ return false; }
 
-    }
+// }
 
-    //Compare send time selected to time limits
-    private boolean endTimeIsOutOfBound(LocalTime time){
-        if(time.isAfter(LocalTime.of(18, 0))){ return true; }
+// //Compare send time selected to time limits
+// private boolean endTimeIsOutOfBound(LocalTime time){
+//     if(time.isAfter(LocalTime.of(18, 0))){ return true; }
 
-        else{ return false; }
+//     else{ return false; }
 
-    }
+// }
 
     //Compare time selected to other meetings
     private boolean startTimeValidate(LocalTime time){
@@ -192,8 +198,9 @@ public class AddMeetingViewModel extends ViewModel {
 
     }
 
+
     public void addEmails(String email) {
-        emails= Arrays.asList(new Email(email));
+        emails.add(new Email(email));
 
     }
 

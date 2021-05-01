@@ -9,43 +9,45 @@ import com.kardabel.mareu.ui.add.AddMeetingViewModel;
 import com.kardabel.mareu.ui.details.DetailsViewModel;
 import com.kardabel.mareu.ui.list.MainViewModel;
 
-/**
- * Created by stéphane Warin OCR on 01/04/2021.
- */
+
 public class MareuViewModelFactory implements ViewModelProvider.Factory {
 
-  private static MareuViewModelFactory sFactory;
+    private static MareuViewModelFactory sFactory;
+    private final MeetingsRepository mMeetingsrepository;
 
-  public static MareuViewModelFactory getInstance() {
-      if (sFactory == null) {
-          synchronized (MareuViewModelFactory.class) {
-              if (sFactory == null) {
-                  sFactory = new MareuViewModelFactory();
+    public static MareuViewModelFactory getInstance() {
+        if (sFactory == null) {
+            synchronized (MareuViewModelFactory.class) {
+                if (sFactory == null) {
+                    sFactory = new MareuViewModelFactory();
 
-              }
-          }
-      }
-      return sFactory;
+                }
+            }
+        }
+        return sFactory;
 
-  }
+    }
 
-  @NonNull
-  @Override
-  public <T extends ViewModel> T create(Class<T> modelClass) {
-      if (modelClass.isAssignableFrom(MainViewModel.class)) {
-          return (T) new MainViewModel(new MeetingsRepository());
+    public MareuViewModelFactory() {
+        mMeetingsrepository = new MeetingsRepository();
+    }
 
-      }
-      else if(modelClass.isAssignableFrom(DetailsViewModel.class)){
-          return (T) new DetailsViewModel(new MeetingsRepository());
+    // Create an instance for each viewmodel
+    @NonNull
+    @Override
+    public <T extends ViewModel> T create(Class<T> modelClass) {
+        if (modelClass.isAssignableFrom(MainViewModel.class)) {
+            return (T) new MainViewModel(mMeetingsrepository);
 
-      }
-      else if(modelClass.isAssignableFrom(AddMeetingViewModel.class)){
-          return (T) new AddMeetingViewModel(new MeetingsRepository());
+        } else if (modelClass.isAssignableFrom(DetailsViewModel.class)) {
+            return (T) new DetailsViewModel(mMeetingsrepository);
 
-      }
+        } else if (modelClass.isAssignableFrom(AddMeetingViewModel.class)) {
+            return (T) new AddMeetingViewModel(mMeetingsrepository);
 
-      throw new IllegalArgumentException("Unknown ViewModel class");
+        }
 
-  }
+        throw new IllegalArgumentException("Unknown ViewModel class");
+
+    }
 }

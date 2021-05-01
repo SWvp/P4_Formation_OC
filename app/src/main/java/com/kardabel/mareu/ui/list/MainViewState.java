@@ -26,35 +26,17 @@ public class MainViewState {
         this.mailingList = mailingList;
     }
 
-    public int getMeetingId(){
+    public int getMeetingId(){ return meetingId; }
 
-        return meetingId;
-    }
+    public String getMeetingDateToDisplay(){ return meetingDate; }
 
-    public String getMeetingDateToDisplay(){
-        return meetingDate;
+    public String getMeetingDetailsToDisplay(){ return meetingDetails; }
 
-    }
+    public String getRoomNameToDisplay(){ return roomName; }
 
-    public String getMeetingDetailsToDisplay(){
-        return meetingDetails;
+    public int getAvatarToDisplay(){ return avatarIcon; }
 
-    }
-
-    public String getRoomNameToDisplay(){
-        return roomName;
-
-    }
-
-    public int getAvatarToDisplay(){
-        return avatarIcon;
-
-    }
-
-    public String getMailingListToDisplay(){
-        return mailingList;
-
-    }
+    public String getMailingListToDisplay(){ return mailingList; }
 
     @Override
     public boolean equals(Object o) {

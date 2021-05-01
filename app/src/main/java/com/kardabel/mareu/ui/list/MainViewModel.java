@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MainViewModel extends ViewModel {
 
     private final MeetingsRepository mMeetingsRepository;
@@ -27,7 +28,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Room> roomFilterMutableLiveData = new MutableLiveData<>();
     private final MutableLiveData<LocalDate> dateFilterMutableLiveData = new MutableLiveData<>();
 
-    //Observers
+    // Observers
     public MainViewModel(@NonNull MeetingsRepository meetingsRepository) {
         mMeetingsRepository = meetingsRepository;
 
@@ -58,7 +59,7 @@ public class MainViewModel extends ViewModel {
         });
     }
 
-    //Filter the Mediator
+    // Filter the Mediator
     private void combine(@Nullable List<Meeting> meetings, @Nullable Room room, @Nullable LocalDate date) {
         List<Meeting> filteredMeetings = new ArrayList<>();
         if((room == null) && (date == null)){
@@ -71,9 +72,8 @@ public class MainViewModel extends ViewModel {
                     filteredMeetings.add(meeting);
 
                 }
-                meetingsListMediatorLiveData.setValue(map(filteredMeetings));
-
             }
+            meetingsListMediatorLiveData.setValue(map(filteredMeetings));
         }
     }
 
@@ -99,6 +99,7 @@ public class MainViewModel extends ViewModel {
         return result;
     }
 
+    // Convert emails
     private String readableEmails(Meeting meeting){
         String humanReadableEmails;
         List<String> emails = meeting.getMailingList();
@@ -119,20 +120,22 @@ public class MainViewModel extends ViewModel {
 
     public void roomFilterValue(Room room){
         roomFilterMutableLiveData.setValue(room);
+        dateFilterMutableLiveData.setValue(null);
     }
 
-    public void onDateFilterSetMainViewModel(DatePicker view, int year, int month, int dayOfMonth) {
-        LocalDate date = LocalDate.of(year, month, dayOfMonth);
+    public void onDateFilterSetMainViewModel(int year, int month, int dayOfMonth) {
+        LocalDate date = LocalDate.of(year, month+1, dayOfMonth);
         dateFilterValue(date);
 
     }
 
     public void dateFilterValue(LocalDate date){
         dateFilterMutableLiveData.setValue(date);
+        roomFilterMutableLiveData.setValue(null);
 
     }
 
-    public void resetFilter(Boolean reset){
+    public void resetFilter(){
         dateFilterMutableLiveData.setValue(null);
         roomFilterMutableLiveData.setValue(null);
 
@@ -140,6 +143,11 @@ public class MainViewModel extends ViewModel {
 
     public void deleteMeeting(int meetingId){
         mMeetingsRepository.deleteMeeting(meetingId);
+
+    }
+
+    public void resetList(){
+        mMeetingsRepository.resetListForKillScreen();
     }
 
     public LiveData<List<MainViewState>> getMeetingsListLiveData(){ return meetingsListMediatorLiveData; }
