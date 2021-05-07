@@ -89,7 +89,7 @@ public class MainViewModel extends ViewModel {
             result.add(new MainViewState(
                     meeting.getMeetingId(),
                     humanReadableDate,
-                    meeting.getMeetingName() + " - " + humanReadableHour + " - " + humanReadableDate + " - " + meeting.getRoomName().getRoomMeetingName(),
+                    meeting.getMeetingName() + " - " + humanReadableHour  + " - " + meeting.getRoomName().getRoomMeetingName(),
                     meeting.getRoomName().getRoomMeetingName(),
                     meeting.getRoomAvatar().getDrawableRoomIcon(),
                     humanReadableEmails
@@ -123,7 +123,7 @@ public class MainViewModel extends ViewModel {
         dateFilterMutableLiveData.setValue(null);
     }
 
-    public void onDateFilterSetMainViewModel(int year, int month, int dayOfMonth) {
+    public void onDateFilterPicked(int year, int month, int dayOfMonth) {
         LocalDate date = LocalDate.of(year, month+1, dayOfMonth);
         dateFilterValue(date);
 
@@ -135,7 +135,7 @@ public class MainViewModel extends ViewModel {
 
     }
 
-    public void resetFilter(){
+    public void resetFilters(){
         dateFilterMutableLiveData.setValue(null);
         roomFilterMutableLiveData.setValue(null);
 
@@ -146,8 +146,9 @@ public class MainViewModel extends ViewModel {
 
     }
 
+
     public void resetList(){
-        mMeetingsRepository.resetListForKillScreen();
+        mMeetingsRepository.resetListForNonPersistentData();
     }
 
     public LiveData<List<MainViewState>> getMeetingsListLiveData(){ return meetingsListMediatorLiveData; }

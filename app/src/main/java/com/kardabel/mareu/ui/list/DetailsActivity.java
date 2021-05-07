@@ -30,9 +30,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView startAndEndTime;
     private TextView date;
     private TextView roomMeetingName;
-
     private ImageView meetingAvatar;
-
     private ImageButton backButton;
 
     private ChipGroup chipGroup;

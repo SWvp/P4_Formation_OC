@@ -13,7 +13,7 @@ import com.kardabel.mareu.ui.list.MainViewModel;
 public class MareuViewModelFactory implements ViewModelProvider.Factory {
 
     private static MareuViewModelFactory sFactory;
-    private final MeetingsRepository mMeetingsrepository;
+    private final MeetingsRepository mMeetingsRepository;
 
     public static MareuViewModelFactory getInstance() {
         if (sFactory == null) {
@@ -29,21 +29,21 @@ public class MareuViewModelFactory implements ViewModelProvider.Factory {
     }
 
     public MareuViewModelFactory() {
-        mMeetingsrepository = new MeetingsRepository();
+        mMeetingsRepository = new MeetingsRepository();
     }
 
-    // Create an instance for each viewmodel
+    // Create an instance for each viewModel
     @NonNull
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
-            return (T) new MainViewModel(mMeetingsrepository);
+            return (T) new MainViewModel(mMeetingsRepository);
 
         } else if (modelClass.isAssignableFrom(DetailsViewModel.class)) {
-            return (T) new DetailsViewModel(mMeetingsrepository);
+            return (T) new DetailsViewModel(mMeetingsRepository);
 
         } else if (modelClass.isAssignableFrom(AddMeetingViewModel.class)) {
-            return (T) new AddMeetingViewModel(mMeetingsrepository);
+            return (T) new AddMeetingViewModel(mMeetingsRepository);
 
         }
 

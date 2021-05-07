@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
-        //launch add meeting activity
+        // Launch add meeting activity
         FloatingActionButton floatingActionButton = findViewById(R.id.add_meeting_button);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,9 +102,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     // Room filters action
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        { case R.id.reset_filter:
-                mMainViewModel.resetFilter();
+        switch (item.getItemId()) {
+            case R.id.reset_filter:
+                mMainViewModel.resetFilters();
                 return true;
             case R.id.date_filter:
                 DialogFragment datePicker = new DatePickerFragment();
@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             case R.id.allMeeting:
                 mMainViewModel.roomFilterValue(Room.ROOM_RESET);
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
 
@@ -153,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     // Date filter picked
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        mMainViewModel.onDateFilterSetMainViewModel(year, month, dayOfMonth);
+        mMainViewModel.onDateFilterPicked(year, month, dayOfMonth);
 
     }
 
@@ -162,5 +161,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     protected void onDestroy() {
         mMainViewModel.resetList();
         super.onDestroy();
+
     }
 }

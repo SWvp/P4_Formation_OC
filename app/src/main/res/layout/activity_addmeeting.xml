@@ -65,6 +65,7 @@
             app:startIconDrawable="@drawable/ic_baseline_drive_file_rename_outline_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/meeting_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

@@ -39,44 +39,6 @@ public class MeetingsRepository {
 
     }
 
-    public boolean compareDate(LocalDate date) {
-        if(nMeetings.contains(date)){ return true; }
-        else{ return false; }
-
-    }
-
-    public boolean compareRoom(Room room){
-        if(nMeetings.contains(room)){ return true; }
-        else{ return false; }
-
-    }
-
-    public boolean compareStartTime(LocalTime time){
-        for(Meeting meeting : nMeetings){
-            if((meeting.getMeetingStart().isBefore(time))&&(meeting.getMeetingEnd().isAfter(time))){
-                return true;
-            }
-            else if ((meeting.getMeetingStart().equals(time))&&(meeting.getMeetingEnd().isAfter(time))){
-                return true;
-            }
-        }
-        return false;
-
-    }
-
-    public boolean compareEndTime(LocalTime time){
-        for(Meeting meeting : nMeetings){
-            if((meeting.getMeetingStart().isBefore(time))&&(meeting.getMeetingEnd().isAfter(time))){
-                    return true;
-            }
-            else if ((meeting.getMeetingStart().isBefore(time))&&(meeting.getMeetingEnd().equals(time))){
-                return true;
-            }
-        }
-        return false;
-
-    }
-
     public int findLastMeetingId(){
         int size = nMeetings.size() - 1;
         int id = nMeetings.get(size).getMeetingId();
@@ -84,7 +46,7 @@ public class MeetingsRepository {
 
     }
 
-    public void resetListForKillScreen(){
+    public void resetListForNonPersistentData(){
         nMeetings = nMeetingsInitial;
         mutableMeetingList.setValue(nMeetings);
 

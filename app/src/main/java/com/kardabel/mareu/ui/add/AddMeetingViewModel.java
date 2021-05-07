@@ -5,12 +5,14 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.kardabel.mareu.model.Email;
 import com.kardabel.mareu.model.Meeting;
 import com.kardabel.mareu.model.Room;
 import com.kardabel.mareu.repository.MeetingsRepository;
+import com.kardabel.mareu.ui.add.utils.SingleLiveEvent;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,12 +36,10 @@ public class AddMeetingViewModel extends ViewModel {
 
     private List<Email> emails = new ArrayList<>();
 
-    private boolean startTimeProblemSendToast = false;
-    private boolean endTimeProblemSendToast = false;
-    private boolean startTimeOOB = false;
-    private boolean startTimeAfterEndToast = false;
-    private boolean endTimeOOB = false;
-    private boolean endTimeBeforeStartToast = false;
+    private boolean chooseDateWasNotPassed = false;
+
+    private SingleLiveEvent<Integer> toastTimeEvent = new SingleLiveEvent<>();
+
 
     public AddMeetingViewModel(@NonNull MeetingsRepository meetingsRepository) {
         mMeetingsRepository = meetingsRepository;
@@ -57,138 +57,64 @@ public class AddMeetingViewModel extends ViewModel {
 
     }
 
+    // when start time is picked
     public void onStartTimeSet(TimePicker view, int hourOfDay, int minute, EditText startTime) {
-        startTimeAfterEndToast = false;
         mStartTime = LocalTime.of(hourOfDay, minute);
 
-        if(mStartTime.isAfter(LocalTime.of(17,00))){
-            //toast too late start !!!
+        if (mStartTime.isAfter(LocalTime.of(17, 00)) || mStartTime.isBefore(LocalTime.of(8, 00))) {
+            onTimeSetProblem(1);
             return;
+
         }
-        if(mEndTime != null){
-            if(mStartTime.isAfter(mEndTime)){
-                //Toast start must be before end
+        if (mEndTime != null) {
+            if (mStartTime.isAfter(mEndTime)) {
+                onTimeSetProblem(2);
                 return;
 
             }
         }
- //     if(startTimeIsOutOfBound(mStartTime)){
- //         startTimeOOB = true;
- //         return;
-
- //     }
- //     else{
-            String humanReadableHour = mStartTime.toString();
-            startTime.setText(humanReadableHour);
+        String humanReadableHour = mStartTime.toString();
+        startTime.setText(humanReadableHour);
 
     }
 
     //when end time is picked
     public void onEndTimeSet(TimePicker view, int hourOfDay, int minute, EditText hourEditText) {
-        endTimeBeforeStartToast = false;
+
         mEndTime = LocalTime.of(hourOfDay, minute);
 
-        if(mEndTime.isAfter(LocalTime.of(18 ,00))){
-            //toast too late end !!
+        if (mEndTime.isAfter(LocalTime.of(18, 00)) || mEndTime.isBefore(LocalTime.of(9, 00))) {
+            onTimeSetProblem(3);
             return;
+
         }
-        if(mStartTime != null){
-            if(mEndTime.isBefore(mStartTime)){
-                //Toast end must be after start
+        if (mStartTime != null) {
+            if (mEndTime.isBefore(mStartTime)) {
+                onTimeSetProblem(4);
                 return;
 
             }
         }
- //    if(mStartTime != null){
- //        if (mEndTime.isBefore(mStartTime)) {
- //            endTimeBeforeStartToast = true;
- //            return;
-
- //        }
- //    }
- //    if(endTimeIsOutOfBound(mEndTime)){
- //        endTimeOOB = true;
- //        return;
-
- //    }
-        //else{
-            String humanReadableHour = mEndTime.toString();
-            hourEditText.setText(humanReadableHour);
-
+        String humanReadableHour = mEndTime.toString();
+        hourEditText.setText(humanReadableHour);
 
     }
 
     //When a date is picked
     public void onDateSetAddMeetingViewModel(DatePicker view, int year, int month, int dayOfMonth, EditText dateEditText) {
+        chooseDateWasNotPassed = false;
         mDate = LocalDate.of(year, month, dayOfMonth);
         if(mDate.isBefore(LocalDate.now())){
-
+            chooseDateWasNotPassed = true;
             return;
+
         }
         String humanReadableDate = mDate.toString();
         dateEditText.setText(humanReadableDate);
 
     }
 
-    //Compare date selected to other meetings
-    private boolean dateValidate(LocalDate date){
-        if(mMeetingsRepository.compareDate(date)){ return true; }
-        else{ return false; }
-    }
-
-    //Compare room selected to other meetings
-    private boolean roomValidate(Room room){
-        if(mMeetingsRepository.compareRoom(room)){ return true; }
-        else{ return false; }
-    }
-
-// //Compare start time selected to time limits
-// private boolean startTimeIsOutOfBound(LocalTime time){
-//     if(time.isBefore(LocalTime.of(8, 0))){ return true; }
-
-//     else if (time.isAfter((LocalTime.of(17,0)))){ return true; }
-
-//     else{ return false; }
-
-// }
-
-// //Compare send time selected to time limits
-// private boolean endTimeIsOutOfBound(LocalTime time){
-//     if(time.isAfter(LocalTime.of(18, 0))){ return true; }
-
-//     else{ return false; }
-
-// }
-
-    //Compare time selected to other meetings
-    private boolean startTimeValidate(LocalTime time){
-        if(mMeetingsRepository.compareStartTime(time)){
-            startTimeProblemSendToast = true;
-            return true;
-        }
-        else{ return false; }
-    }
-
-    private boolean endTimeValidate(LocalTime time){
-        if(mMeetingsRepository.compareEndTime(time)){
-            endTimeProblemSendToast = true;
-            return true;
-        }
-        else{ return false; }
-    }
-
-    public boolean startTimeProblemWithOtherMeetings(){ return startTimeProblemSendToast; }
-
-    public boolean endTimeProblemWithOtherMeetings(){ return endTimeProblemSendToast; }
-
-    public boolean startTimeOOB(){ return startTimeOOB; }
-
-    public boolean endTimeOOB(){ return endTimeOOB; }
-
-    public boolean startTimeAfterEndTime(){ return startTimeAfterEndToast; }
-
-    public boolean endTimeBeforeStartTime(){ return endTimeBeforeStartToast; }
-
+    public boolean chooseGoodDate(){ return chooseDateWasNotPassed; }
 
     //Create meeting ID
     public int meetingId() {
@@ -227,8 +153,14 @@ public class AddMeetingViewModel extends ViewModel {
 
         }
         else {
+            onTimeSetProblem(5);
             return false;
 
         }
     }
+
+    public void onTimeSetProblem(Integer index) {toastTimeEvent.setValue(index);}
+
+    public SingleLiveEvent<Integer> getTimeEvent() {return toastTimeEvent;}
+
 }

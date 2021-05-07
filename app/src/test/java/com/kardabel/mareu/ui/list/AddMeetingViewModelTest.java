@@ -1,14 +1,12 @@
 package com.kardabel.mareu.ui.list;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.MutableLiveData;
 
 import com.kardabel.mareu.model.Email;
 import com.kardabel.mareu.model.Meeting;
 import com.kardabel.mareu.model.Room;
 import com.kardabel.mareu.repository.MeetingsRepository;
 import com.kardabel.mareu.ui.add.AddMeetingViewModel;
-import com.kardabel.mareu.ui.add.AddMeetingViewState;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,19 +28,58 @@ public class AddMeetingViewModelTest {
 
     private final MeetingsRepository mMeetingsRepository = Mockito.mock(MeetingsRepository.class);
 
-    private final MutableLiveData<List<Meeting>> meetingsMutableLiveData = new MutableLiveData<>();
-
     private AddMeetingViewModel mAddMeetingViewModel;
+
 
     @Before
     public void setUp() {
-        Mockito.doReturn(meetingsMutableLiveData).when(mMeetingsRepository).getMeetingsList();
-
         mAddMeetingViewModel = new AddMeetingViewModel(mMeetingsRepository);
     }
 
     @Test
     public void nominal_case() throws InterruptedException {
+
+    }
+
+    @Test
+    public void add_name_with_success(){
+
+
+    }
+
+    @Test
+    public void add_room_and_avatar_with_success(){
+
+
+    }
+
+    @Test
+    public void add_email_with_success(){
+
+
+    }
+
+    @Test
+    public void given_correct_email_should_add_in_chipGroup(){
+
+
+    }
+
+    @Test
+    public void given_incorrect_email_should_add_nothing(){
+
+
+    }
+
+    @Test
+    public void save_complete_meeting_add_meeting(){
+
+
+    }
+
+    @Test
+    public void save_not_complete_meeting_do_nothing(){
+
 
     }
 

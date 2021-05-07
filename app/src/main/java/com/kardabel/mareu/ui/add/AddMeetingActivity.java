@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.chip.Chip;
@@ -54,7 +55,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         addMeetingViewModel =
                 new ViewModelProvider(this, MareuViewModelFactory.getInstance()).get(AddMeetingViewModel.class);
 
-        //Dropdown room choice menu
+        // Dropdown room choice menu
         AutoCompleteTextView roomSelect = findViewById(R.id.dropdown_autocomplete);
         String[] items = new String[]{
                 "Peach", "Mario", "Luigi", "Toad", "Yoshi", "Donkey", "Koopa", "Boo",
@@ -71,10 +72,11 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 meetingRoom = parent.getItemAtPosition(position).toString();
+
             }
         });
 
-        //Date popup
+        // Date popup
         EditText dateButton = findViewById(R.id.date_setter);
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +86,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             }
         });
 
-        //Start time popup with flag update
+        // Start time popup with flag update
         EditText startTime = findViewById(R.id.start_time_setter);
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +97,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             }
         });
 
-        //End time popup with flag update
+        // End time popup with flag update
         EditText endTime = findViewById(R.id.end_time_setter);
         endTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +108,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             }
         });
 
-        //Add email
+        // Add email
         email = findViewById(R.id.email_input);
         Button addMailButton = findViewById(R.id.add_mail_button);
         addMailButton.setOnClickListener(new View.OnClickListener() {
@@ -116,80 +118,110 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             }
         });
 
+        // Save the meeting
         Button save = findViewById(R.id.create);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveMeeting();
-              if(!addMeetingViewModel.completeReunion()){
-                  Toast.makeText(AddMeetingActivity.this, "complete all fields please", Toast.LENGTH_SHORT).show();
-                  return;
-              }
+                if (!addMeetingViewModel.completeReunion()) {
+                    return;
 
-              else if(addMeetingViewModel.startTimeProblemWithOtherMeetings()){
-                  Toast.makeText(AddMeetingActivity.this, "change start meeting hour please", Toast.LENGTH_SHORT).show();
-                  return;
-              }
-
-              else if(addMeetingViewModel.endTimeProblemWithOtherMeetings()){
-                  Toast.makeText(AddMeetingActivity.this, "change end meeting hour please", Toast.LENGTH_SHORT).show();
-                  return;
-
-              }
+                }
                 finish();
+
             }
         });
 
+        // Back to main activity
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onClick(View v) { finish(); }
 
+        });
+
+        ///////////////Toast Events with SingleLiveEvent////////////////
+
+        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer index) {
+                if(index == 1){
+                Toast.makeText(AddMeetingActivity.this, "Start time must be between 8am and 17pm", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
+        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer index) {
+                if(index == 2){
+                    Toast.makeText(AddMeetingActivity.this, "Start time must be before end time !", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
+        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer index) {
+                if(index == 3){
+                    Toast.makeText(AddMeetingActivity.this, "End time must before 18pm and after 9am", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
+        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer index) {
+                if(index == 4){
+                    Toast.makeText(AddMeetingActivity.this, "End time must be after start time !", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
+        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer index) {
+                if(index == 5){
+                    Toast.makeText(AddMeetingActivity.this, "Complete all fields please", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
     }
 
-    //Flag to know witch time edittext to update
+    // Flag to know witch time edittext to update
     public void setFlagForTime(int i) {
         flag = i;
+
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         EditText dateEditText = findViewById(R.id.date_setter);
         addMeetingViewModel.onDateSetAddMeetingViewModel(view, year, month+1, dayOfMonth, dateEditText);
+
     }
 
-    //with flag, we know witch edittext to update and compare
+    // With flag, we know witch editText to update
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         EditText startTime = findViewById(R.id.start_time_setter);
         EditText endTime = findViewById(R.id.end_time_setter);
-        if(flag == 0){
+        if (flag == 0) {
             addMeetingViewModel.onStartTimeSet(view, hourOfDay, minute, startTime);
-            if(addMeetingViewModel.startTimeAfterEndTime()){
-                Toast.makeText(this, "start time must be before end time", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            else if(addMeetingViewModel.startTimeOOB()){
-                Toast.makeText(this, "start time between 08a.m and 05p.m ", Toast.LENGTH_SHORT).show();
-                return;
-            }
+
         }
-        if(flag == 1){
+        if (flag == 1) {
             addMeetingViewModel.onEndTimeSet(view, hourOfDay, minute, endTime);
-            if(addMeetingViewModel.endTimeOOB()){
-                Toast.makeText(this, "end time must be before 06p.m ", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            else if(addMeetingViewModel.endTimeBeforeStartTime()){
-                Toast.makeText(this, "end time must be after start time", Toast.LENGTH_SHORT).show();
-                return;
-            }
 
         }
     }
 
+    // Check email entry
     private boolean validateEmailAddress(TextInputLayout email){
         String emailInput = email.getEditText().getText().toString();
         if(!emailInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailInput).find()){
@@ -204,17 +236,21 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         }
     }
 
+    // Add email as a chip in chipGroup
     private  void addNewChipEmails(String email){
         LayoutInflater inflater = LayoutInflater.from(this);
         Chip newChip = (Chip) inflater.inflate(R.layout.mail_chip_item, this.addMeetingChipGroup, false);
         newChip.setText(email);
         this.addMeetingChipGroup.addView(newChip);
+
     }
 
+    // When meeting is about to be saved
     public void saveMeeting() {
         String stringMeetingName = meetingName.getEditText().getText().toString();
         addMeetingViewModel.addMeetingName(stringMeetingName);
         addMeetingViewModel.addMeetingRoom(meetingRoom);
         addMeetingViewModel.addNewMeeting();
+
     }
 }

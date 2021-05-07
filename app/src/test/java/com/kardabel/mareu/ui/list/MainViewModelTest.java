@@ -92,38 +92,12 @@ public class MainViewModelTest {
         // Then
         assertEquals(1, result.size());
         MainViewState firstResult = result.get(0);
-        assertEquals(new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - 2021-05-12 - Mario", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"), firstResult);
+        assertEquals(new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - Mario", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"), firstResult);
 
     }
 
     @Test
-    public void given_room_filter_is_peach_should_display_peach() throws InterruptedException {
-        // Given
-        meetingsMutableLiveData.setValue(getDefaultMeetings());
-
-        // When
-        mMainViewModel.roomFilterValue(Room.ROOM_PEACH);
-        List<MainViewState> result = LiveDataTestUtils.getOrAwaitValue(mMainViewModel.getMeetingsListLiveData());
-
-        // Then
-        assertEquals(getPeach(), result);
-    }
-
-    @Test
-    public void given_room_filter_is_goomba_should_display_1_meeting() throws InterruptedException {
-        // Given
-        meetingsMutableLiveData.setValue(getDefaultMeetings());
-
-        // When
-        mMainViewModel.roomFilterValue(Room.ROOM_GOOMBA);
-        List<MainViewState> result = LiveDataTestUtils.getOrAwaitValue(mMainViewModel.getMeetingsListLiveData());
-
-        // Then
-        assertEquals(1, result.size());
-    }
-
-    @Test
-    public void given_date_filter_out_of_all_meetings_should_display_empty_list() throws InterruptedException {
+    public void given_date_filter_is_out_of_all_meetings_should_display_empty_list() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
@@ -162,26 +136,13 @@ public class MainViewModelTest {
     }
 
     @Test
-    public void given_list_of_email_should_display_list_of_string() throws InterruptedException {
-//      // Given
-//      meetingsMutableLiveData.setValue(getDefaultMeetings());
-
-//      // When
-//      mMainViewModel.dateFilterValue(LocalDate.of(2021, 05, 12));
-//      List<MainViewState> result = LiveDataTestUtils.getOrAwaitValue(mMainViewModel.getMeetingsListLiveData());
-
-//      // Then
-//      assertEquals("stephane@monmail.fr - peteretsteven@monmail.fr", result);
-    }
-
-    @Test
-    public void given_reset_filter_should_display_4_meeting() throws InterruptedException {
+    public void given_reset_filter_after_date_filter_should_display_4_meeting() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
         // When
         mMainViewModel.dateFilterValue(LocalDate.of(2021, 05, 12));
-        mMainViewModel.resetFilter();
+        mMainViewModel.resetFilters();
         List<MainViewState> result = LiveDataTestUtils.getOrAwaitValue(mMainViewModel.getMeetingsListLiveData());
 
         // Then
@@ -189,16 +150,32 @@ public class MainViewModelTest {
     }
 
     @Test
-    public void given_meeting_to_delete_should_display_3_meetings() throws InterruptedException {
+    public void given_reset_filter_after_room_filter_should_display_4_meeting() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
         // When
-        mMainViewModel.deleteMeeting(0);
+        mMainViewModel.roomFilterValue(Room.ROOM_BOO);
+        mMainViewModel.resetFilters();
         List<MainViewState> result = LiveDataTestUtils.getOrAwaitValue(mMainViewModel.getMeetingsListLiveData());
 
         // Then
-        assertEquals(3, result.size());
+        assertEquals(4, result.size());
+    }
+
+    @Test
+    public void given_date_and_room_filters_then_reset_should_display_all_meetings() throws InterruptedException {
+        // Given
+        meetingsMutableLiveData.setValue(getDefaultMeetings());
+
+        // When
+        mMainViewModel.dateFilterValue(LocalDate.of(2021, 11, 02));
+        mMainViewModel.roomFilterValue(Room.ROOM_GOOMBA);
+        mMainViewModel.resetFilters();
+        List<MainViewState> result = LiveDataTestUtils.getOrAwaitValue(mMainViewModel.getMeetingsListLiveData());
+
+        // Then
+        assertEquals(4, result.size());
     }
 
     // IN
@@ -212,7 +189,7 @@ public class MainViewModelTest {
                         new Email("warin@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(2, "Reunion c", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(12, 35), LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
+                new Meeting(2, "Reunion C", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(12, 35), LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
                         new Email("philibert@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
@@ -243,13 +220,13 @@ public class MainViewModelTest {
     // OUT
     private List<MainViewState> getDefaultMainViewState() {
         return  Arrays.asList(
-                new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - 2021-05-12 - Mario", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - Mario", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(1, "2021-11-02", "Reunion B - 09:00 - 2021-11-02 - Peach", "Peach", R.drawable.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(1, "2021-11-02", "Reunion B - 09:00 - Peach", "Peach", R.drawable.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(2, "2021-06-15", "Reunion C - 11:08 - 2021-06-15 - Goomba", "Goomba", R.drawable.goomba, "philibert@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(2, "2021-06-15", "Reunion C - 11:08 - Goomba", "Goomba", R.drawable.goomba, "philibert@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(3, "2021-10-02", "Reunion D - 16:50 - 2021-10-02 - Boo", "Boo", R.drawable.boo, "krabulbe@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(3, "2021-10-02", "Reunion D - 16:50 - Boo", "Boo", R.drawable.boo, "krabulbe@monmail.fr - peteretsteven@monmail.fr"
                 )
 
         );

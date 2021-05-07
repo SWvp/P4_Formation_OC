@@ -56,7 +56,7 @@ public class DetailsViewModelTest {
     }
 
     @Test
-    public void given_meeting_id_is_0_should_select_meeting() throws InterruptedException {
+    public void given_meeting_id_is_0_should_display_meeting() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
@@ -70,7 +70,7 @@ public class DetailsViewModelTest {
     }
 
     @Test
-    public void given_meeting_id_is_2_should_select_meeting() throws InterruptedException {
+    public void given_meeting_id_is_2_should_display_meeting() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
@@ -84,7 +84,7 @@ public class DetailsViewModelTest {
     }
 
     @Test
-    public void given_meeting_id_is_3_should_give_string_hour() throws InterruptedException {
+    public void given_meeting_id_is_3_should_display_string_hour() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
@@ -98,7 +98,7 @@ public class DetailsViewModelTest {
     }
 
     @Test
-    public void given_meeting_id_is_2_should_give_string_date() throws InterruptedException {
+    public void given_meeting_id_is_2_should_display_string_date() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
@@ -112,21 +112,7 @@ public class DetailsViewModelTest {
     }
 
     @Test
-    public void given_meeting_id_is_1_should_give_emails_list() throws InterruptedException {
-        // Given
-        meetingsMutableLiveData.setValue(getDefaultMeetings());
-
-        // When
-        mDetailsViewModel.init(1);
-        DetailsViewState result = LiveDataTestUtils.getOrAwaitValue(mDetailsViewModel.getDetailsLiveData());
-
-        // Then
-        assertEquals( Arrays.asList("warin@monmail.fr", "peteretsteven@monmail.fr"), result.getDetailsEmails());
-
-    }
-
-    @Test
-    public void given_meeting_id_is_0_should_give_room_name() throws InterruptedException {
+    public void given_meeting_id_is_0_should_display_room_name() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
@@ -140,7 +126,21 @@ public class DetailsViewModelTest {
     }
 
     @Test
-    public void given_meeting_id_is_3_should_give_meeting_name() throws InterruptedException {
+    public void given_meeting_id_is_2_should_display_room_name() throws InterruptedException {
+        // Given
+        meetingsMutableLiveData.setValue(getDefaultMeetings());
+
+        // When
+        mDetailsViewModel.init(2);
+        DetailsViewState result = LiveDataTestUtils.getOrAwaitValue(mDetailsViewModel.getDetailsLiveData());
+
+        // Then
+        assertEquals( "Peach", result.getDetailsRoomName());
+
+    }
+
+    @Test
+    public void given_meeting_id_is_3_should_display_meeting_name() throws InterruptedException {
         // Given
         meetingsMutableLiveData.setValue(getDefaultMeetings());
 
@@ -149,28 +149,79 @@ public class DetailsViewModelTest {
         DetailsViewState result = LiveDataTestUtils.getOrAwaitValue(mDetailsViewModel.getDetailsLiveData());
 
         // Then
-        assertEquals( "Reuninon D", result.getDetailsMeetingName());
+        assertEquals( "Reunion D", result.getDetailsMeetingName());
+
+    }
+
+    @Test
+    public void given_meeting_id_is_1_should_display_meeting_name() throws InterruptedException {
+        // Given
+        meetingsMutableLiveData.setValue(getDefaultMeetings());
+
+        // When
+        mDetailsViewModel.init(1);
+        DetailsViewState result = LiveDataTestUtils.getOrAwaitValue(mDetailsViewModel.getDetailsLiveData());
+
+        // Then
+        assertEquals( "Reunion A", result.getDetailsMeetingName());
+
+    }
+
+    @Test
+    public void given_meeting_id_is_2_should_display_2_chip() throws InterruptedException {
+        // Given
+        meetingsMutableLiveData.setValue(getDefaultMeetings());
+
+        // When
+        mDetailsViewModel.init(2);
+        DetailsViewState result = LiveDataTestUtils.getOrAwaitValue(mDetailsViewModel.getDetailsLiveData());
+
+        // Then
+        assertEquals( Arrays.asList(
+                ("philibert@monmail.fr"),
+                ("peteretsteven@monmail.fr")),
+                result.getDetailsEmails());
+
+    }
+
+    @Test
+    public void given_meeting_id_is_2_should_display_3_chip() throws InterruptedException {
+        // Given
+        meetingsMutableLiveData.setValue(getDefaultMeetings());
+
+        // When
+        mDetailsViewModel.init(3);
+        DetailsViewState result = LiveDataTestUtils.getOrAwaitValue(mDetailsViewModel.getDetailsLiveData());
+
+        // Then
+        assertEquals( Arrays.asList(
+                ("krabulbe@monmail.fr"),
+                ("peteretsteven@monmail.fr"),
+                ("unclebob@monmail.fr")),
+                result.getDetailsEmails());
 
     }
 
     private List<Meeting> getDefaultMeetings() {
         return Arrays.asList(
-                new Meeting(0, "Reuninon A", Room.ROOM_MARIO, LocalTime.of(15, 10), LocalTime.of(15, 10),LocalDate.of(2021, 05, 12), Room.ROOM_MARIO, Arrays.asList(
+                new Meeting(0, "Reunion A", Room.ROOM_MARIO, LocalTime.of(15, 10), LocalTime.of(15, 10),LocalDate.of(2021, 05, 12), Room.ROOM_MARIO, Arrays.asList(
                         new Email("stephane@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(1, "Reuninon B", Room.ROOM_PEACH, LocalTime.of(9, 00), LocalTime.of(15, 10),LocalDate.of(2021, 11, 02), Room.ROOM_PEACH, Arrays.asList(
+                new Meeting(1, "Reunion B", Room.ROOM_PEACH, LocalTime.of(9, 00), LocalTime.of(15, 10),LocalDate.of(2021, 11, 02), Room.ROOM_PEACH, Arrays.asList(
                         new Email("warin@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(2, "Reuninon c", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(15, 10),LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
+                new Meeting(2, "Reunion c", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(15, 10),LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
                         new Email("philibert@monmail.fr"),
                         new Email("peteretsteven@monmail.fr")
                 )),
-                new Meeting(3, "Reuninon D", Room.ROOM_BOO, LocalTime.of(16, 50), LocalTime.of(15, 10),LocalDate.of(2021, 10, 02), Room.ROOM_BOO, Arrays.asList(
+                new Meeting(3, "Reunion D", Room.ROOM_BOO, LocalTime.of(16, 50), LocalTime.of(15, 10),LocalDate.of(2021, 10, 02), Room.ROOM_BOO, Arrays.asList(
                         new Email("krabulbe@monmail.fr"),
-                        new Email("peteretsteven@monmail.fr")
-                ))
+                        new Email("peteretsteven@monmail.fr"),
+                        new Email("unclebob@monmail.fr")
+
+                        ))
         );
     }
 }
