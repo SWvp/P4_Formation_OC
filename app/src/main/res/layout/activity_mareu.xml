@@ -19,7 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
-            app:title="MAREU"
+            app:title="Ma réu"
             app:titleTextColor="@color/white"
             android:clickable="true"
             app:menu="@menu/top_app_bar"
