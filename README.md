@@ -1,4 +1,4 @@
-MAREU
+"Ma réu"
 
 
 Cette application permet aux collaborateurs de Lamzone de réserver une salle pour une réunion.
