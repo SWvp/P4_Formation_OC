@@ -40,6 +40,9 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
     private ChipGroup addMeetingChipGroup;
     private String meetingRoom;
     private int flag = -1;
+    private String startTimeText;
+    private String endTimeText;
+    private String dateText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
 
         meetingName = findViewById(R.id.meeting_name);
         addMeetingChipGroup = findViewById(R.id.add_meeting_chipGroup);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.add_meeting_toolbar);
         toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
@@ -77,8 +81,8 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         });
 
         // Date popup
-        EditText dateButton = findViewById(R.id.date_setter);
-        dateButton.setOnClickListener(new View.OnClickListener() {
+        EditText dateEditText = findViewById(R.id.date_setter);
+        dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datePicker = new DatePickerFragment();
@@ -122,15 +126,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         Button save = findViewById(R.id.create);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                saveMeeting();
-                if (!addMeetingViewModel.completeReunion()) {
-                    return;
-
-                }
-                finish();
-
-            }
+            public void onClick(View v) { saveMeeting(); }
         });
 
         // Back to main activity
@@ -140,54 +136,43 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
 
         });
 
-        ///////////////Toast Events with SingleLiveEvent////////////////
+        ///////////////SingleLiveEvent////////////////
 
-        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
+        addMeetingViewModel.getViewActionSingleLiveEvent().observe(this, new Observer<AddMeetingViewAction>() {
             @Override
-            public void onChanged(Integer index) {
-                if(index == 1){
-                Toast.makeText(AddMeetingActivity.this, "Start time must be between 8am and 17pm", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-
-        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer index) {
-                if(index == 2){
-                    Toast.makeText(AddMeetingActivity.this, "Start time must be before end time !", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-
-        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer index) {
-                if(index == 3){
-                    Toast.makeText(AddMeetingActivity.this, "End time must before 18pm and after 9am", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-
-        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer index) {
-                if(index == 4){
-                    Toast.makeText(AddMeetingActivity.this, "End time must be after start time !", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-
-        addMeetingViewModel.getTimeEvent().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer index) {
-                if(index == 5){
-                    Toast.makeText(AddMeetingActivity.this, "Complete all fields please", Toast.LENGTH_LONG).show();
-
+            public void onChanged(AddMeetingViewAction action) {
+                switch (action) {
+                    case FINISH_ACTIVITY:
+                        finish();
+                        Toast.makeText(AddMeetingActivity.this, "Thank you !", Toast.LENGTH_LONG).show();
+                        break;
+                    case DISPLAY_FIELDS_ERROR:
+                        Toast.makeText(AddMeetingActivity.this, "Complete all fields please", Toast.LENGTH_LONG).show();
+                        break;
+                    case DISPLAY_START_OOB:
+                        Toast.makeText(AddMeetingActivity.this, "Start time must be between 8am and 17pm", Toast.LENGTH_LONG).show();
+                        break;
+                    case DISPLAY_END_OOB:
+                        Toast.makeText(AddMeetingActivity.this, "End time must before 18pm and after 9am", Toast.LENGTH_LONG).show();
+                        break;
+                    case DISPLAY_START_AFTER_ERROR:
+                        Toast.makeText(AddMeetingActivity.this, "Start time must be before end time !", Toast.LENGTH_LONG).show();
+                        break;
+                    case DISPLAY_END_BEFORE_ERROR:
+                        Toast.makeText(AddMeetingActivity.this, "End time must be after start time !", Toast.LENGTH_LONG).show();
+                        break;
+                    case DISPLAY_START_HOUR:
+                        startTime.setText(startTimeText);
+                        break;
+                    case DISPLAY_END_HOUR:
+                        endTime.setText(endTimeText);
+                        break;
+                    case DISPLAY_DATE:
+                        dateEditText.setText(dateText);
+                        break;
+                    case DATE_ERROR:
+                        Toast.makeText(AddMeetingActivity.this, "Date must be this day or higher", Toast.LENGTH_LONG).show();
+                        break;
                 }
             }
         });
@@ -201,22 +186,22 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        EditText dateEditText = findViewById(R.id.date_setter);
-        addMeetingViewModel.onDateSetAddMeetingViewModel(view, year, month+1, dayOfMonth, dateEditText);
+        dateText = year + "-" + month + "-" + dayOfMonth;
+        addMeetingViewModel.onDateSet(year, month+1, dayOfMonth);
 
     }
 
     // With flag, we know witch editText to update
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        EditText startTime = findViewById(R.id.start_time_setter);
-        EditText endTime = findViewById(R.id.end_time_setter);
         if (flag == 0) {
-            addMeetingViewModel.onStartTimeSet(view, hourOfDay, minute, startTime);
+            startTimeText = hourOfDay + ":" + minute;
+            addMeetingViewModel.onStartTimeSet(hourOfDay, minute);
 
         }
         if (flag == 1) {
-            addMeetingViewModel.onEndTimeSet(view, hourOfDay, minute, endTime);
+            endTimeText = hourOfDay + ":" + minute;
+            addMeetingViewModel.onEndTimeSet(hourOfDay, minute);
 
         }
     }
@@ -250,7 +235,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         String stringMeetingName = meetingName.getEditText().getText().toString();
         addMeetingViewModel.addMeetingName(stringMeetingName);
         addMeetingViewModel.addMeetingRoom(meetingRoom);
-        addMeetingViewModel.addNewMeeting();
+        addMeetingViewModel.onSaveButtonClick();
 
     }
 }

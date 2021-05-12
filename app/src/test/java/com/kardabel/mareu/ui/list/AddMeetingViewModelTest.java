@@ -1,16 +1,22 @@
 package com.kardabel.mareu.ui.list;
 
+import android.widget.TimePicker;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.Observer;
 
 import com.kardabel.mareu.model.Email;
 import com.kardabel.mareu.model.Meeting;
 import com.kardabel.mareu.model.Room;
 import com.kardabel.mareu.repository.MeetingsRepository;
+import com.kardabel.mareu.ui.add.AddMeetingViewAction;
 import com.kardabel.mareu.ui.add.AddMeetingViewModel;
+import com.kardabel.mareu.ui.list.utils.LiveDataTestUtils;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
@@ -23,13 +29,11 @@ import static org.junit.Assert.assertEquals;
 
 public class AddMeetingViewModelTest {
 
-    @Rule
-    public final InstantTaskExecutorRule mInstantTaskExecutorRule = new InstantTaskExecutorRule();
-
-    private final MeetingsRepository mMeetingsRepository = Mockito.mock(MeetingsRepository.class);
-
     private AddMeetingViewModel mAddMeetingViewModel;
 
+    @Rule
+    public final InstantTaskExecutorRule mInstantTaskExecutorRule = new InstantTaskExecutorRule();
+    private final MeetingsRepository mMeetingsRepository = Mockito.mock(MeetingsRepository.class);
 
     @Before
     public void setUp() {
@@ -37,70 +41,127 @@ public class AddMeetingViewModelTest {
     }
 
     @Test
-    public void nominal_case() throws InterruptedException {
+    public void picked_startTime_in_right_range_should_display_startTime() throws InterruptedException {
+        // When
+        mAddMeetingViewModel.onStartTimeSet(10,55);
+
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+        // Then
+        assertEquals(AddMeetingViewAction.DISPLAY_START_HOUR, result);
 
     }
 
     @Test
-    public void add_name_with_success(){
+    public void picked_endTime_in_right_range_should_display_startTime() throws InterruptedException {
+        // When
+        mAddMeetingViewModel.onEndTimeSet(15,32);
 
-
-    }
-
-    @Test
-    public void add_room_and_avatar_with_success(){
-
-
-    }
-
-    @Test
-    public void add_email_with_success(){
-
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+        // Then
+        assertEquals(AddMeetingViewAction.DISPLAY_END_HOUR, result);
 
     }
 
     @Test
-    public void given_correct_email_should_add_in_chipGroup(){
+    public void picked_startTime_out_of_range_should_display_toast_error() throws InterruptedException {
+        // When
+        mAddMeetingViewModel.onStartTimeSet(07,05);
 
-
-    }
-
-    @Test
-    public void given_incorrect_email_should_add_nothing(){
-
-
-    }
-
-    @Test
-    public void save_complete_meeting_add_meeting(){
-
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+        // Then
+        assertEquals(AddMeetingViewAction.DISPLAY_START_OOB, result);
 
     }
 
     @Test
-    public void save_not_complete_meeting_do_nothing(){
+    public void picked_endTime_out_of_range_should_display_toast_error() throws InterruptedException {
+        // When
+        mAddMeetingViewModel.onEndTimeSet(22, 10);
 
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+        // Then
+        assertEquals(AddMeetingViewAction.DISPLAY_END_OOB, result);
 
     }
 
-    private List<Meeting> getDefaultMeetings() {
-        return Arrays.asList(
-                new Meeting(0, "Reuninon A", Room.ROOM_MARIO, LocalTime.of(15, 10),LocalTime.of(15, 10), LocalDate.of(2021, 05, 12), Room.ROOM_MARIO, Arrays.asList(
-                        new Email("stephane@monmail.fr"),
-                        new Email("peteretsteven@monmail.fr")
-                )),
-                new Meeting(1, "Reuninon B", Room.ROOM_PEACH, LocalTime.of(9, 00),LocalTime.of(15, 10), LocalDate.of(2021, 11, 02), Room.ROOM_PEACH, Arrays.asList(
-                        new Email("warin@monmail.fr"),
-                        new Email("peteretsteven@monmail.fr")
-                )),
-                new Meeting(2, "Reuninon c", Room.ROOM_GOOMBA, LocalTime.of(11, 8), LocalTime.of(15, 10),LocalDate.of(2021, 06, 15), Room.ROOM_GOOMBA, Arrays.asList(
-                        new Email("philibert@monmail.fr"),
-                        new Email("peteretsteven@monmail.fr")
-                )),
-                new Meeting(3, "Reuninon D", Room.ROOM_BOO, LocalTime.of(16, 50), LocalTime.of(15, 10),LocalDate.of(2021, 10, 02), Room.ROOM_BOO, Arrays.asList(
-                        new Email("krabulbe@monmail.fr"),
-                        new Email("peteretsteven@monmail.fr")
-                ))
-        );
+    @Test
+    public void picked_startTime_after_endTime_should_display_error() throws InterruptedException {
+        // When
+        mAddMeetingViewModel.onEndTimeSet(15,00);
+        mAddMeetingViewModel.onStartTimeSet(15,01);
+
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+        // Then
+        assertEquals(AddMeetingViewAction.DISPLAY_START_AFTER_ERROR, result);
+
+    }
+
+    @Test
+    public void picked_endTime_before_startTime_should_display_error() throws InterruptedException {
+        // When
+        mAddMeetingViewModel.onStartTimeSet(16,50);
+        mAddMeetingViewModel.onEndTimeSet(16,28);
+
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+        // Then
+        assertEquals(AddMeetingViewAction.DISPLAY_END_BEFORE_ERROR, result);
+
+    }
+
+    @Test
+    public void picked_date_in_right_range_should_display_date() throws InterruptedException {
+        // When
+        mAddMeetingViewModel.onDateSet(2021, 12, 25);
+
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+        // Then
+        assertEquals(AddMeetingViewAction.DISPLAY_DATE, result);
+
+    }
+
+    @Test
+    public void picked_date_out_of_range_should_display_error() throws InterruptedException {
+        // When
+        mAddMeetingViewModel.onDateSet(2020, 12, 25);
+
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+        // Then
+        assertEquals(AddMeetingViewAction.DATE_ERROR, result);
+
+    }
+
+    @Test
+    public void on_save_click_button_if_complete_meeting_should_add_new_meeting() throws InterruptedException {
+        // Feed the fields
+        mAddMeetingViewModel.addMeetingName("Reunion A");
+        mAddMeetingViewModel.addMeetingRoom("Peach");
+        mAddMeetingViewModel.onStartTimeSet(15, 5);
+        mAddMeetingViewModel.onEndTimeSet(17, 25);
+        mAddMeetingViewModel.onDateSet(2021,05,23);
+        mAddMeetingViewModel.addEmails("alloa@test.mail");
+
+        mAddMeetingViewModel.onSaveButtonClick();
+
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+
+        assertEquals(AddMeetingViewAction.FINISH_ACTIVITY, result);
+
+    }
+
+    @Test
+    public void on_save_click_button_if_incomplete_meeting_should_display_error() throws InterruptedException {
+        // Feed the fields
+        mAddMeetingViewModel.addMeetingRoom("Peach");
+        mAddMeetingViewModel.onStartTimeSet(15, 5);
+        mAddMeetingViewModel.onEndTimeSet(17, 25);
+        mAddMeetingViewModel.onDateSet(2021,05,23);
+        mAddMeetingViewModel.addEmails("alloa@test.mail");
+
+        mAddMeetingViewModel.onSaveButtonClick();
+
+        AddMeetingViewAction result = LiveDataTestUtils.getOrAwaitValue(mAddMeetingViewModel.getViewActionSingleLiveEvent());
+
+        assertEquals(AddMeetingViewAction.DISPLAY_FIELDS_ERROR, result);
+
     }
 }

@@ -92,7 +92,7 @@ public class MainViewModelTest {
         // Then
         assertEquals(1, result.size());
         MainViewState firstResult = result.get(0);
-        assertEquals(new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - Mario", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"), firstResult);
+        assertEquals(new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - Mario", "Mario", R.color.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"), firstResult);
 
     }
 
@@ -178,6 +178,16 @@ public class MainViewModelTest {
         assertEquals(4, result.size());
     }
 
+    @Test
+    public void given_meeting_to_delete_should_display_3_meetings() throws InterruptedException {
+
+        // When
+        mMainViewModel.deleteMeeting(0);
+
+        // Then
+        Mockito.verify(mMeetingsRepository).deleteMeeting(0);
+    }
+
     // IN
     private List<Meeting> getDefaultMeetings() {
         return Arrays.asList(
@@ -220,21 +230,13 @@ public class MainViewModelTest {
     // OUT
     private List<MainViewState> getDefaultMainViewState() {
         return  Arrays.asList(
-                new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - Mario", "Mario", R.drawable.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(0, "2021-05-12", "Reunion A - 15:10 - Mario", "Mario", R.color.mario, "stephane@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(1, "2021-11-02", "Reunion B - 09:00 - Peach", "Peach", R.drawable.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(1, "2021-11-02", "Reunion B - 09:00 - Peach", "Peach", R.color.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(2, "2021-06-15", "Reunion C - 11:08 - Goomba", "Goomba", R.drawable.goomba, "philibert@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(2, "2021-06-15", "Reunion C - 11:08 - Goomba", "Goomba", R.color.goomba, "philibert@monmail.fr - peteretsteven@monmail.fr"
                 ),
-                new MainViewState(3, "2021-10-02", "Reunion D - 16:50 - Boo", "Boo", R.drawable.boo, "krabulbe@monmail.fr - peteretsteven@monmail.fr"
-                )
-
-        );
-    }
-
-    private List<MainViewState> getPeach() {
-        return  Arrays.asList(
-                new MainViewState(1, "2021-11-02", "Reunion B - 09:00 - 2021-11-02 - Peach", "Peach", R.drawable.peach, "warin@monmail.fr - peteretsteven@monmail.fr"
+                new MainViewState(3, "2021-10-02", "Reunion D - 16:50 - Boo", "Boo", R.color.boo, "krabulbe@monmail.fr - peteretsteven@monmail.fr"
                 )
 
         );

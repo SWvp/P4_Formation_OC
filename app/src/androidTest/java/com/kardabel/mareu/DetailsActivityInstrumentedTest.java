@@ -21,7 +21,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
 @RunWith(AndroidJUnit4.class)
-public class DetailsActivityTest {
+public class DetailsActivityInstrumentedTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule(MainActivity.class);
@@ -48,16 +48,6 @@ public class DetailsActivityTest {
         onView(withId(R.id.detail_room_name)).check(matches((withText("Mario"))));
 
     }
-
-//    @Test
-//    public void details_Activity_display_room_avatar(){
-//        // When: click on recyclerview item
-//        onView(ViewMatchers.withId(R.id.recyclerView))
-//                .perform(RecyclerViewActions.actionOnItemAtPosition(0, new ItemViewAction()));
-//        // Then: display meeting room avatar
-//        onView(withId(R.id.detail_room_avatar)).check(matches(withId(R.drawable.mario)));
-//
-//    }
 
     @Test
     public void details_Activity_display_date(){
@@ -88,14 +78,4 @@ public class DetailsActivityTest {
         onView(withId(R.id.detail_hour)).check(matches((withText("09:00 to 11:20"))));
 
     }
-
-//    @Test
-//    public void details_Activity_display_emails(){
-//        // When: click on recyclerview item
-//        onView(ViewMatchers.withId(R.id.recyclerView))
-//                .perform(RecyclerViewActions.actionOnItemAtPosition(0, new ItemViewAction()));
-//        // Then: email chip
-//        onView(withId(R.id.chipgroup_detail_emails)).check(matches((withText("stephane@monmail.fr"))));
-//
-//    }
 }

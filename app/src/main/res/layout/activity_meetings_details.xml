@@ -30,7 +30,7 @@
             app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/detail_room_avatar"
             android:layout_width="128dp"
             android:layout_height="128dp"

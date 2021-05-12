@@ -44,24 +44,13 @@ import static org.junit.Assert.assertTrue;
 
 
 @RunWith(JUnit4.class)
-public class AddMeetingActivityTest {
+public class AddMeetingActivityInstrumentedTest {
     @Rule
     public ActivityScenarioRule<AddMeetingActivity> mActivityScenarioRule =
             new ActivityScenarioRule(AddMeetingActivity.class);
 
     @Before
     public void launchActivity() { ActivityScenario.launch(AddMeetingActivity.class); }
-
-    @Test
-    public void selected_room_show_room_name(){
-        // When: click on room dropdown menu
-        onView(ViewMatchers.withId(R.id.dropdown_autocomplete)).perform(scrollTo(), click());
-        onData(allOf(is(instanceOf(String.class)),is("Peach"))).perform(click());
-        // Then: text shows room selected
-        onView(withId(R.id.dropdown_autocomplete)).check(matches(allOf(withText("Peach"), isDisplayed())));
-
-
-    }
 
     @Test
     public void selected_date_shows_date(){
@@ -87,17 +76,17 @@ public class AddMeetingActivityTest {
 
     @Test
     public void selected_end_time_shows_hour(){
-        // When: click on the end time text and choose a time via timepicker
+        // When: click on the end time text and choose a time via timePicker
         onView(ViewMatchers.withId(R.id.end_time_setter)).perform(scrollTo(), click());
-        onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(8, 21));
+        onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(14, 21));
         onView(withText("OK")).perform(click());
         // Then: text shows time picked
-        onView(withId(R.id.end_time_setter)).check(matches(allOf(withText("08:21"), isDisplayed())));
+        onView(withId(R.id.end_time_setter)).check(matches(allOf(withText("14:21"), isDisplayed())));
 
     }
 
     @Test
-    public void selected_start_time_is_out_of_bound(){
+    public void selected_start_time_is_out_of_bound_should_not_display_time(){
         // When: click on the start time text and choose a time via timepicker
         onView(ViewMatchers.withId(R.id.start_time_setter)).perform(scrollTo(), click());
         onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(05, 00));
@@ -108,7 +97,7 @@ public class AddMeetingActivityTest {
     }
 
     @Test
-    public void selected_end_time_is_out_of_bound(){
+    public void selected_end_time_is_out_of_bound_should_not_display_time(){
         // When: click on the end time text and choose a time via timepicker
         onView(ViewMatchers.withId(R.id.end_time_setter)).perform(scrollTo(), click());
         onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(19, 33));
@@ -138,30 +127,6 @@ public class AddMeetingActivityTest {
         onView(ViewMatchers.withId(R.id.create)).perform(scrollTo(), click());
         onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard());
         // Then: chipGroup do not shows email and toast popup
-
-    }
-
-    @Test
-    public void save_button_shows_main_activity_with_new_meeting_if_meeting_fields_complete(){
-        // When: click on the fab button and check all fields with correct data
-        onView(ViewMatchers.withId(R.id.meeting_name_input)).perform(replaceText("test 1"));
-        onView(ViewMatchers.withId(R.id.dropdown_autocomplete)).perform(replaceText("Luigi"));
-        onView(ViewMatchers.withId(R.id.date_setter)).perform(scrollTo(), click());
-        onView(isAssignableFrom(DatePicker.class)).perform(PickerActions.setDate(2022, 10, 3));
-        onView(withText("OK")).perform(click());
-        onView(ViewMatchers.withId(R.id.start_time_setter)).perform(scrollTo(), click());
-        onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(8, 05));
-        onView(withText("OK")).perform(click());
-        onView(ViewMatchers.withId(R.id.end_time_setter)).perform(scrollTo(), click());
-        onView(isAssignableFrom(TimePicker.class)).perform(PickerActions.setTime(10, 55));
-        onView(withText("OK")).perform(click());
-        onView(ViewMatchers.withId(R.id.email_input)).perform(scrollTo(), click());
-        onView(ViewMatchers.withId(R.id.email_text)).perform(replaceText("test@test.com"));
-        onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard());
-        onView(ViewMatchers.withId(R.id.create)).perform(scrollTo(), click());
-
-        assertTrue(mActivityScenarioRule.getScenario() == null);
-
 
     }
 

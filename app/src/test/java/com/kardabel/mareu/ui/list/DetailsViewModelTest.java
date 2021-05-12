@@ -135,7 +135,7 @@ public class DetailsViewModelTest {
         DetailsViewState result = LiveDataTestUtils.getOrAwaitValue(mDetailsViewModel.getDetailsLiveData());
 
         // Then
-        assertEquals( "Peach", result.getDetailsRoomName());
+        assertEquals( "Goomba", result.getDetailsRoomName());
 
     }
 
@@ -163,7 +163,7 @@ public class DetailsViewModelTest {
         DetailsViewState result = LiveDataTestUtils.getOrAwaitValue(mDetailsViewModel.getDetailsLiveData());
 
         // Then
-        assertEquals( "Reunion A", result.getDetailsMeetingName());
+        assertEquals( "Reunion B", result.getDetailsMeetingName());
 
     }
 

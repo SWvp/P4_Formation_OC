@@ -5,7 +5,6 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.kardabel.mareu.model.Email;
@@ -17,7 +16,6 @@ import com.kardabel.mareu.ui.add.utils.SingleLiveEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -26,6 +24,7 @@ public class AddMeetingViewModel extends ViewModel {
     private MeetingsRepository mMeetingsRepository;
 
     private String mMeetingName;
+    private int meetingId;
 
     private LocalTime mStartTime;
     private LocalTime mEndTime;
@@ -36,9 +35,8 @@ public class AddMeetingViewModel extends ViewModel {
 
     private List<Email> emails = new ArrayList<>();
 
-    private boolean chooseDateWasNotPassed = false;
 
-    private SingleLiveEvent<Integer> toastTimeEvent = new SingleLiveEvent<>();
+    private SingleLiveEvent<AddMeetingViewAction> mActionSingleLiveEvent = new SingleLiveEvent<>();
 
 
     public AddMeetingViewModel(@NonNull MeetingsRepository meetingsRepository) {
@@ -57,66 +55,61 @@ public class AddMeetingViewModel extends ViewModel {
 
     }
 
-    // when start time is picked
-    public void onStartTimeSet(TimePicker view, int hourOfDay, int minute, EditText startTime) {
+    // When start time is picked
+    public void onStartTimeSet(int hourOfDay, int minute) {
         mStartTime = LocalTime.of(hourOfDay, minute);
 
         if (mStartTime.isAfter(LocalTime.of(17, 00)) || mStartTime.isBefore(LocalTime.of(8, 00))) {
-            onTimeSetProblem(1);
+            mActionSingleLiveEvent.setValue(AddMeetingViewAction.DISPLAY_START_OOB);
             return;
 
         }
         if (mEndTime != null) {
             if (mStartTime.isAfter(mEndTime)) {
-                onTimeSetProblem(2);
+                mActionSingleLiveEvent.setValue(AddMeetingViewAction.DISPLAY_START_AFTER_ERROR);
                 return;
 
             }
         }
-        String humanReadableHour = mStartTime.toString();
-        startTime.setText(humanReadableHour);
+
+        mActionSingleLiveEvent.setValue(AddMeetingViewAction.DISPLAY_START_HOUR);
 
     }
 
-    //when end time is picked
-    public void onEndTimeSet(TimePicker view, int hourOfDay, int minute, EditText hourEditText) {
+    // When end time is picked
+    public void onEndTimeSet(int hourOfDay, int minute) {
 
         mEndTime = LocalTime.of(hourOfDay, minute);
 
         if (mEndTime.isAfter(LocalTime.of(18, 00)) || mEndTime.isBefore(LocalTime.of(9, 00))) {
-            onTimeSetProblem(3);
+            mActionSingleLiveEvent.setValue(AddMeetingViewAction.DISPLAY_END_OOB);
             return;
 
         }
         if (mStartTime != null) {
             if (mEndTime.isBefore(mStartTime)) {
-                onTimeSetProblem(4);
+                mActionSingleLiveEvent.setValue(AddMeetingViewAction.DISPLAY_END_BEFORE_ERROR);
                 return;
 
             }
         }
-        String humanReadableHour = mEndTime.toString();
-        hourEditText.setText(humanReadableHour);
+        mActionSingleLiveEvent.setValue(AddMeetingViewAction.DISPLAY_END_HOUR);
 
     }
 
-    //When a date is picked
-    public void onDateSetAddMeetingViewModel(DatePicker view, int year, int month, int dayOfMonth, EditText dateEditText) {
-        chooseDateWasNotPassed = false;
+    // When a date is picked
+    public void onDateSet(int year, int month, int dayOfMonth) {
         mDate = LocalDate.of(year, month, dayOfMonth);
         if(mDate.isBefore(LocalDate.now())){
-            chooseDateWasNotPassed = true;
+            mActionSingleLiveEvent.setValue(AddMeetingViewAction.DATE_ERROR);
             return;
 
         }
-        String humanReadableDate = mDate.toString();
-        dateEditText.setText(humanReadableDate);
+        mActionSingleLiveEvent.setValue(AddMeetingViewAction.DISPLAY_DATE);
 
     }
 
-    public boolean chooseGoodDate(){ return chooseDateWasNotPassed; }
-
-    //Create meeting ID
+    // Create meeting ID
     public int meetingId() {
         int lastmeetingId = mMeetingsRepository.findLastMeetingId();
         int meetingId = lastmeetingId + 1;
@@ -130,7 +123,7 @@ public class AddMeetingViewModel extends ViewModel {
 
     }
 
-    public void addNewMeeting() {
+    public void onSaveButtonClick() {
         Meeting meeting = new Meeting(
                 meetingId(),
                 mMeetingName,
@@ -147,20 +140,17 @@ public class AddMeetingViewModel extends ViewModel {
         }
     }
 
-    public boolean completeReunion() {
+    private boolean completeReunion() {
         if (mMeetingName != null && mStartTime != null && mEndTime != null && mDate !=null && mRoomName!= null && mRoomAvatar != null && emails!= null) {
+            mActionSingleLiveEvent.setValue(AddMeetingViewAction.FINISH_ACTIVITY);
             return true;
-
         }
         else {
-            onTimeSetProblem(5);
+            mActionSingleLiveEvent.setValue(AddMeetingViewAction.DISPLAY_FIELDS_ERROR);
             return false;
-
         }
     }
 
-    public void onTimeSetProblem(Integer index) {toastTimeEvent.setValue(index);}
-
-    public SingleLiveEvent<Integer> getTimeEvent() {return toastTimeEvent;}
+    public SingleLiveEvent<AddMeetingViewAction> getViewActionSingleLiveEvent() {return mActionSingleLiveEvent;}
 
 }

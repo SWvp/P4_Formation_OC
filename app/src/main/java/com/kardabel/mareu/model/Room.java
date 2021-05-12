@@ -1,24 +1,25 @@
 package com.kardabel.mareu.model;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 
 import com.kardabel.mareu.R;
 
 
 public enum Room {
-    ROOM_RESET(R.drawable.blank, "Reset"),
-    ROOM_PEACH(R.drawable.peach, "Peach"),
-    ROOM_MARIO(R.drawable.mario, "Mario"),
-    ROOM_LUIGI(R.drawable.luigi, "Luigi"),
-    ROOM_TOAD(R.drawable.toad, "Toad"),
-    ROOM_YOSHI(R.drawable.yoshi, "Yoshi"),
-    ROOM_DONKEY(R.drawable.donkey, "Donkey"),
-    ROOM_KOOPA(R.drawable.koopa, "Koopa"),
-    ROOM_BOO(R.drawable.boo, "Boo"),
-    ROOM_GOOMBA(R.drawable.goomba, "Goomba"),
-    ROOM_KAMEK(R.drawable.kamek, "Kamek");
+    ROOM_RESET(R.color.white, "Reset"),
+    ROOM_PEACH(R.color.peach, "Peach"),
+    ROOM_MARIO(R.color.mario, "Mario"),
+    ROOM_LUIGI(R.color.luigi, "Luigi"),
+    ROOM_TOAD(R.color.toad, "Toad"),
+    ROOM_YOSHI(R.color.yoshi, "Yoshi"),
+    ROOM_DONKEY(R.color.donkey, "Donkey"),
+    ROOM_KOOPA(R.color.koopa, "Koopa"),
+    ROOM_BOO(R.color.boo, "Boo"),
+    ROOM_GOOMBA(R.color.goomba, "Goomba"),
+    ROOM_KAMEK(R.color.kamek, "Kamek");
 
-    @DrawableRes
+    @ColorRes
     private final int roomIcon;
     private final String roomName;
 

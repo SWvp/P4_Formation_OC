@@ -38,10 +38,8 @@ public class MeetingsRecyclerViewAdapter extends RecyclerView.Adapter<MeetingsRe
 
         holder.meetingDetails.setText(meeting.getMeetingDetailsToDisplay());
         holder.mailingList.setText(meeting.getMailingListToDisplay());
-        Glide.with(holder.roomAvatar.getContext())
-                .load(meeting.getAvatarToDisplay())
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.roomAvatar);
+        holder.roomAvatar.setImageResource(meeting.getAvatarToDisplay());
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
