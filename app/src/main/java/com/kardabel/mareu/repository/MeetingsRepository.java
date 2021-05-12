@@ -39,6 +39,7 @@ public class MeetingsRepository {
 
     }
 
+    // Search for the higher Id in current list
     public int findLastMeetingId(){
         int size = nMeetings.size() - 1;
         int id = nMeetings.get(size).getMeetingId();

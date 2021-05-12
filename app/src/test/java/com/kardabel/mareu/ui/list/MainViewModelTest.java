@@ -40,6 +40,7 @@ public class MainViewModelTest {
     public void setUp() {
         Mockito.doReturn(meetingsMutableLiveData).when(mMeetingsRepository).getMeetingsList();
         mMainViewModel = new MainViewModel(mMeetingsRepository);
+
     }
 
     @Test
@@ -53,6 +54,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(result, getDefaultMainViewState());
+
     }
 
     @Test
@@ -65,6 +67,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(0, result.size());
+
     }
 
     @Test
@@ -77,6 +80,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(3, result.size());
+
     }
 
 
@@ -107,6 +111,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(0, result.size());
+
     }
 
     @Test
@@ -120,6 +125,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(1, result.size());
+
     }
 
     @Test
@@ -133,6 +139,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(1, result.size());
+
     }
 
     @Test
@@ -147,6 +154,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(4, result.size());
+
     }
 
     @Test
@@ -161,6 +169,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(4, result.size());
+
     }
 
     @Test
@@ -176,6 +185,7 @@ public class MainViewModelTest {
 
         // Then
         assertEquals(4, result.size());
+
     }
 
     @Test
@@ -186,6 +196,7 @@ public class MainViewModelTest {
 
         // Then
         Mockito.verify(mMeetingsRepository).deleteMeeting(0);
+
     }
 
     // IN

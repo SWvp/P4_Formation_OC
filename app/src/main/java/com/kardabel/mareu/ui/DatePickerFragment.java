@@ -10,9 +10,7 @@ import androidx.fragment.app.DialogFragment;
 
 import java.time.LocalDate;
 
-/**
- * Created by stéphane Warin OCR on 15/04/2021.
- */
+
 public class DatePickerFragment extends DialogFragment {
 
     @NonNull
@@ -21,7 +19,7 @@ public class DatePickerFragment extends DialogFragment {
         LocalDate date = LocalDate.now();
 
         int year = date.getYear();
-        int month = date.getMonthValue()-1;
+        int month = date.getMonthValue() - 1;
         int day = date.getDayOfMonth();
 
         return new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);

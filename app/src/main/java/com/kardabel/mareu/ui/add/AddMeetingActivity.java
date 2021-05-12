@@ -30,6 +30,7 @@ import com.kardabel.mareu.R;
 import com.kardabel.mareu.di.MareuViewModelFactory;
 import com.kardabel.mareu.ui.DatePickerFragment;
 import com.kardabel.mareu.ui.TimePickerFragment;
+import com.kardabel.mareu.ui.add.utils.AddMeetingViewAction;
 
 
 public class AddMeetingActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
@@ -112,7 +113,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             }
         });
 
-        // Add email
+        // Click on "add email" button
         email = findViewById(R.id.email_input);
         Button addMailButton = findViewById(R.id.add_mail_button);
         addMailButton.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +123,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             }
         });
 
-        // Save the meeting
+        // Click on "Save" button
         Button save = findViewById(R.id.create);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +147,15 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
                         finish();
                         Toast.makeText(AddMeetingActivity.this, "Thank you !", Toast.LENGTH_LONG).show();
                         break;
+                    case DISPLAY_START_HOUR:
+                        startTime.setText(startTimeText);
+                        break;
+                    case DISPLAY_END_HOUR:
+                        endTime.setText(endTimeText);
+                        break;
+                    case DISPLAY_DATE:
+                        dateEditText.setText(dateText);
+                        break;
                     case DISPLAY_FIELDS_ERROR:
                         Toast.makeText(AddMeetingActivity.this, "Complete all fields please", Toast.LENGTH_LONG).show();
                         break;
@@ -161,15 +171,6 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
                     case DISPLAY_END_BEFORE_ERROR:
                         Toast.makeText(AddMeetingActivity.this, "End time must be after start time !", Toast.LENGTH_LONG).show();
                         break;
-                    case DISPLAY_START_HOUR:
-                        startTime.setText(startTimeText);
-                        break;
-                    case DISPLAY_END_HOUR:
-                        endTime.setText(endTimeText);
-                        break;
-                    case DISPLAY_DATE:
-                        dateEditText.setText(dateText);
-                        break;
                     case DATE_ERROR:
                         Toast.makeText(AddMeetingActivity.this, "Date must be this day or higher", Toast.LENGTH_LONG).show();
                         break;
@@ -178,29 +179,35 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         });
     }
 
-    // Flag to know witch time edittext to update
+    // Flag to know witch time editText to update
     public void setFlagForTime(int i) {
         flag = i;
 
     }
 
+    // Convert date picked to string
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dateText = year + "-" + month + "-" + dayOfMonth;
-        addMeetingViewModel.onDateSet(year, month+1, dayOfMonth);
+        dateText = year + "-" + (month+1) + "-" + dayOfMonth;
+        addMeetingViewModel.onDateSet(year, month, dayOfMonth);
 
     }
 
-    // With flag, we know witch editText to update
+    // Convert time picked to string, then, with flag, we know witch editText to update
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        String min = "";
+        String hour = "";
+        if (minute < 10) { min = "0" + minute; } else { min = String.valueOf(minute); }
+        if (hourOfDay < 10) { hour = "0" + hourOfDay; } else { hour = String.valueOf(hourOfDay); }
+
         if (flag == 0) {
-            startTimeText = hourOfDay + ":" + minute;
+            startTimeText = hour + ":" + min;
             addMeetingViewModel.onStartTimeSet(hourOfDay, minute);
 
         }
         if (flag == 1) {
-            endTimeText = hourOfDay + ":" + minute;
+            endTimeText = hour + ":" + min;
             addMeetingViewModel.onEndTimeSet(hourOfDay, minute);
 
         }

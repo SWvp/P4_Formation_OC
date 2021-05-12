@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mareu);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
@@ -71,17 +71,17 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
 
-        // Launch details
+        // Launch details via adapter interface
         mAdapter.setOnItemClickListener(new MeetingsRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onMeetingItemClick(MainViewState meeting) {
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                intent.putExtra(DetailsActivity.EXTRA_MEETINGID, meeting.getMeetingId());
+                intent.putExtra(DetailsActivity.EXTRA_MEETING_ID, meeting.getMeetingId());
                 startActivity(intent);
 
             }
 
-            // Delete button
+            // Delete button via adapter interface
             @Override
             public void onDeleteMeetingClick(int meeting) {
                 mMainViewModel.deleteMeeting(meeting);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         });
     }
 
-    // Topbar overflow for filters dropdown menu
+    // TopBar overflow for filters dropdown menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
-    // Date filter picked
+    // Date filter action
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         mMainViewModel.onDateFilterPicked(year, month, dayOfMonth);

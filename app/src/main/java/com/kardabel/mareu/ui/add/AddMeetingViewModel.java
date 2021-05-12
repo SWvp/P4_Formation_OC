@@ -1,9 +1,5 @@
 package com.kardabel.mareu.ui.add;
 
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TimePicker;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
@@ -11,6 +7,7 @@ import com.kardabel.mareu.model.Email;
 import com.kardabel.mareu.model.Meeting;
 import com.kardabel.mareu.model.Room;
 import com.kardabel.mareu.repository.MeetingsRepository;
+import com.kardabel.mareu.ui.add.utils.AddMeetingViewAction;
 import com.kardabel.mareu.ui.add.utils.SingleLiveEvent;
 
 import java.time.LocalDate;
@@ -99,7 +96,7 @@ public class AddMeetingViewModel extends ViewModel {
 
     // When a date is picked
     public void onDateSet(int year, int month, int dayOfMonth) {
-        mDate = LocalDate.of(year, month, dayOfMonth);
+        mDate = LocalDate.of(year, month+1, dayOfMonth);
         if(mDate.isBefore(LocalDate.now())){
             mActionSingleLiveEvent.setValue(AddMeetingViewAction.DATE_ERROR);
             return;

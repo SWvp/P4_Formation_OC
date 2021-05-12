@@ -1,6 +1,5 @@
 package com.kardabel.mareu.ui.list;
 
-import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +27,6 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Room> roomFilterMutableLiveData = new MutableLiveData<>();
     private final MutableLiveData<LocalDate> dateFilterMutableLiveData = new MutableLiveData<>();
 
-    // Observers
     public MainViewModel(@NonNull MeetingsRepository meetingsRepository) {
         mMeetingsRepository = meetingsRepository;
 

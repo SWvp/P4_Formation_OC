@@ -24,7 +24,7 @@ import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_MEETINGID = "EXTRA_MEETINGID";
+    public static final String EXTRA_MEETING_ID = "EXTRA_MEETINGID";
 
     private TextView meetingName;
     private TextView startAndEndTime;
@@ -55,7 +55,7 @@ public class DetailsActivity extends AppCompatActivity {
                 new ViewModelProvider(this, MareuViewModelFactory.getInstance()).get(DetailsViewModel.class);
 
         Intent intent = getIntent();
-        mDetailsViewModel.init(intent.getIntExtra(EXTRA_MEETINGID, -1));
+        mDetailsViewModel.init(intent.getIntExtra(EXTRA_MEETING_ID, -1));
 
 
         mDetailsViewModel.getDetailsLiveData().observe(this, new Observer<DetailsViewState>() {

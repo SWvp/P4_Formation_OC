@@ -1,4 +1,4 @@
-package com.kardabel.mareu.ui.add;
+package com.kardabel.mareu.ui.add.utils;
 
 
 public enum AddMeetingViewAction {

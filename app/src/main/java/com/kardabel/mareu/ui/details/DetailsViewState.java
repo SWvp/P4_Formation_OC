@@ -1,5 +1,6 @@
 package com.kardabel.mareu.ui.details;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.lifecycle.ViewModel;
 
@@ -13,7 +14,7 @@ public class DetailsViewState extends ViewModel {
     private final String startTime;
     private final String date;
     private final String roomName;
-    @DrawableRes
+    @ColorRes
     private final int avatarIcon;
     private final List<String> mailingList;
 

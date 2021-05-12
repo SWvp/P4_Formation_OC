@@ -1,28 +1,16 @@
 package com.kardabel.mareu.ui.list;
 
-import android.widget.TimePicker;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.Observer;
 
-import com.kardabel.mareu.model.Email;
-import com.kardabel.mareu.model.Meeting;
-import com.kardabel.mareu.model.Room;
 import com.kardabel.mareu.repository.MeetingsRepository;
-import com.kardabel.mareu.ui.add.AddMeetingViewAction;
+import com.kardabel.mareu.ui.add.utils.AddMeetingViewAction;
 import com.kardabel.mareu.ui.add.AddMeetingViewModel;
 import com.kardabel.mareu.ui.list.utils.LiveDataTestUtils;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
