@@ -7,6 +7,7 @@ Développé sur Android Studio, Java 8, APImax 21.
 Fonctions principales
 
     Afficher les différentes réunions
+    Afficher en détail chacune des réunions
     Filtrer ces réunions selon une date ou une salle
     Ajouter une réunion
     Supprimer une réunion
