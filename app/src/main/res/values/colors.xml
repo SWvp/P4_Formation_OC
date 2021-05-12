@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="peach">#FFE0E689</color>
+    <color name="mario">#FF6FB6B8</color>
+    <color name="luigi">#FFB892CF</color>
+    <color name="toad">#FFCFB992</color>
+    <color name="yoshi">#FFCFB992</color>
+    <color name="donkey">#FFCF9292</color>
+    <color name="koopa">#FF606FD5</color>
+    <color name="boo">#FF7F60D5</color>
+    <color name="goomba">#FFA460D5</color>
+    <color name="kamek">#FFD56060</color>
+
+
 </resources>

@@ -10,18 +10,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Maréu">
+        android:theme="@style/Theme.Maréu"
+        >
 
         <activity
-            android:name=".mareu.views.MeetingDetailsActivity" />
-
-
-        <activity
-            android:name=".mareu.views.AddMeetingActivity" />
+            android:name=".ui.list.DetailsActivity"
+            android:screenOrientation="sensor"/>
 
 
         <activity
-            android:name=".mareu.views.MeetingsActivity">
+            android:name=".ui.add.AddMeetingActivity"
+            android:screenOrientation="sensor" />
+
+
+        <activity
+            android:name=".ui.list.MainActivity"
+            android:screenOrientation="sensor">
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN" />

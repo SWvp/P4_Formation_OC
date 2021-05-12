@@ -2,6 +2,7 @@
 
 
     <androidx.cardview.widget.CardView
+    android:id="@+id/item"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -21,54 +22,65 @@
             android:layout_height="wrap_content"
             android:padding="8dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/room_avatar"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_marginStart="4dp"
                 android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/circle_avatar" />
+
 
             <TextView
                 android:id="@+id/meeting_details"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="32dp"
+                android:ellipsize="end"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:maxLines="1"
                 android:padding="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="24dp"
                 android:text="meeting_name - hour - room"
-                android:textColor="@color/black"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:layout_constraintBottom_toTopOf="@+id/mailing_list"
-                app:layout_constraintEnd_toStartOf="@+id/delete_button"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/room_avatar"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/mailing_list"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:padding="8dp"
-                android:text="mails"
-                android:textColor="@android:color/darker_gray"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:layout_marginEnd="64dp"
                 android:maxLines="1"
+                android:padding="8dp"
+                android:text="mailszeazeazeazeazeazeazeazeazeazeazehtrthrthrthrth"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@android:color/darker_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/room_avatar"
-                android:ellipsize="end"/>
+                app:layout_constraintTop_toBottomOf="@+id/meeting_details" />
 
             <ImageButton
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="#FFFFFF"
                 android:src="@drawable/ic_baseline_delete_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/meeting_details"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
